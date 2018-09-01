@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Unix,Configure-Tool," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content=".">
+<meta name="keywords" content="Unix,Configure-Tool">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Configure My Thinkpad T450s">
+<meta property="og:url" content="IamTao.github.io/2016/02/24/configure-my-thinkpad-t450s/index.html">
+<meta property="og:site_name" content="庭草交翠">
+<meta property="og:description" content=".">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-09-01T13:04:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Configure My Thinkpad T450s">
+<meta name="twitter:description" content=".">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="IamTao.github.io/2016/02/24/configure-my-thinkpad-t450s/"/>
+
+
+
+
+
+  <title>Configure My Thinkpad T450s | 庭草交翠</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">庭草交翠</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="IamTao.github.io/2016/02/24/configure-my-thinkpad-t450s/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="虫二">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庭草交翠">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Configure My Thinkpad T450s</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-24T21:02:10+01:00">
+                2016-02-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Wiki/" itemprop="url" rel="index">
+                    <span itemprop="name">Wiki</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>.</p>
+<a id="more"></a>
+<h1 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware</h1><h2 id="How-to-replace-16-GB-NGFF-SSD-by-128-GB-NGFF-SSD"><a href="#How-to-replace-16-GB-NGFF-SSD-by-128-GB-NGFF-SSD" class="headerlink" title="How to replace 16 GB NGFF SSD by 128 GB NGFF SSD"></a>How to replace <code>16 GB NGFF SSD</code> by <code>128 GB NGFF SSD</code></h2><h1 id="Software"><a href="#Software" class="headerlink" title="Software"></a>Software</h1><h2 id="Starters"><a href="#Starters" class="headerlink" title="Starters"></a>Starters</h2><h4 id="Update-System"><a href="#Update-System" class="headerlink" title="Update System"></a>Update System</h4><p><code>sudo apt-get update &amp;&amp; sudo apt-get upgrade</code></p>
+<h4 id="mount-disk-and-change-the-permission"><a href="#mount-disk-and-change-the-permission" class="headerlink" title="mount disk and change the permission"></a>mount disk and change the permission</h4><p>mount the two disk, i.e., <code>Data</code> and <code>Cloud</code> to the <code>home/tlin/</code>, and change their permission by <code>sudo chown -Rv tlin /home/tlin/Cloud</code> or <code>sudo chown -Rv tlin /home/tlin/Data</code></p>
+<h4 id="Install-git"><a href="#Install-git" class="headerlink" title="Install git"></a>Install git</h4><p><code>sudo apt-get install build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext unzip</code></p>
+<h5 id="setup-git"><a href="#setup-git" class="headerlink" title="setup git"></a>setup git</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;Tao Lin&quot;</span><br><span class="line">git config --global user.email &quot;lintaog3@gmail.com&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="avoid-to-enter-the-password-every-time"><a href="#avoid-to-enter-the-password-every-time" class="headerlink" title="avoid to enter the password every time."></a>avoid to enter the password every time.</h5><h4 id="Disable-Unity-Dash-online-search-feature"><a href="#Disable-Unity-Dash-online-search-feature" class="headerlink" title="Disable Unity Dash online search feature"></a>Disable Unity Dash online search feature</h4><p>System setting -&gt; Security &amp; Privacy -&gt; Search -&gt; turn it off</p>
+<h4 id="Enable-Workspaces"><a href="#Enable-Workspaces" class="headerlink" title="Enable Workspaces"></a>Enable Workspaces</h4><p>System setting -&gt; Appearance -&gt; Enable workspaces</p>
+<h4 id="Install-proper-graphics-drivers"><a href="#Install-proper-graphics-drivers" class="headerlink" title="Install proper graphics drivers"></a>Install proper graphics drivers</h4><p>System setting -&gt; Software &amp; Updates -&gt; Additional Drivers</p>
+<h4 id="Install-Ubuntu-Tweak-Tool"><a href="#Install-Ubuntu-Tweak-Tool" class="headerlink" title="Install Ubuntu Tweak Tool"></a>Install Ubuntu Tweak Tool</h4><p>sudo apt-get install unity-tweak-tool gnome-tweak-tool</p>
+<h4 id="Get-themes"><a href="#Get-themes" class="headerlink" title="Get themes"></a>Get themes</h4><p>Add the necessary ppa:<br><code>sudo sh -c &quot;echo &#39;deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_15.10/ /&#39; &gt;&gt; /etc/apt/sources.list.d/arc-theme.list&quot;</code></p>
+<p>Download the repository key with the command:<br><code>wget http://download.opensuse.org/repositories/home:Horst3180/xUbuntu_15.10/Release.key</code></p>
+<p>Add the key with the command:<br><code>sudo apt-key add - &lt; Release.key</code></p>
+<p>Update apt with the command:</p>
+<p><code>sudo apt-get update</code></p>
+<p>Install the theme with the command:<br><code>sudo apt-get install arc-theme</code></p>
+<h4 id="Install-VLC-Media-Player"><a href="#Install-VLC-Media-Player" class="headerlink" title="Install VLC Media Player"></a>Install VLC Media Player</h4><p><code>sudo apt-get install vlc</code></p>
+<h4 id="Install-additional-media-codecs"><a href="#Install-additional-media-codecs" class="headerlink" title="Install additional media codecs"></a>Install additional media codecs</h4><p><code>sudo apt-get -y install gstreamer0.10-plugins-ugly gxine libdvdread4 icedax tagtool easytag id3tool lame nautilus-script-audio-convert libmad0 mpg321 gstreamer1.0-libav</code></p>
+<h4 id="Install-Skype"><a href="#Install-Skype" class="headerlink" title="Install Skype"></a>Install Skype</h4><p>First go to System setting -&gt; Software &amp; Updates -&gt; Other Software -&gt; check first box.</p>
+<p><code>sudo apt-get install skype</code></p>
+<h4 id="Install-Dropbox"><a href="#Install-Dropbox" class="headerlink" title="Install Dropbox"></a>Install Dropbox</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget -O dropbox.deb https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb</span><br><span class="line">sudo dpkg -i dropbox.deb</span><br></pre></td></tr></table></figure>
+<h4 id="Install-Archive-management-apps"><a href="#Install-Archive-management-apps" class="headerlink" title="Install Archive management apps"></a>Install Archive management apps</h4><p><code>sudo apt-get install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract file-roller</code></p>
+<h4 id="Install-Java"><a href="#Install-Java" class="headerlink" title="Install Java"></a>Install Java</h4><p><code>sudo apt-get install openjdk-8-jdk</code></p>
+<h4 id="Install-VirtualBox"><a href="#Install-VirtualBox" class="headerlink" title="Install VirtualBox"></a>Install VirtualBox</h4><p>Installed by official link and ubuntu software center.</p>
+<h4 id="TLP"><a href="#TLP" class="headerlink" title="TLP"></a>TLP</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:linrunner/tlp</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install tlp tlp-rdw smartmontools ethtool</span><br><span class="line">sudo apt-get install tlp tlp-rdw smartmontools ethtool tp-smapi-dkms acpi-call-dkms</span><br><span class="line">sudo tlp start</span><br></pre></td></tr></table></figure>
+<h4 id="Enhance-wifi"><a href="#Enhance-wifi" class="headerlink" title="Enhance wifi"></a>Enhance wifi</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git build-essential</span><br><span class="line">git clone https://github.com/lwfinger/rtlwifi_new.git</span><br><span class="line">cd rtlwifi-new</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<h4 id="Install-docker"><a href="#Install-docker" class="headerlink" title="Install docker"></a>Install docker</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install &amp;&amp; sudo apt-get upgrade</span><br><span class="line">sudo apt-get install docker.io</span><br><span class="line">sudo service docker start</span><br><span class="line">sudo systemctl enable docker</span><br></pre></td></tr></table></figure>
+<h4 id="Install-zsh-and-oh-my-zsh"><a href="#Install-zsh-and-oh-my-zsh" class="headerlink" title="Install zsh and oh-my-zsh"></a>Install zsh and oh-my-zsh</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install zsh</span><br><span class="line">chsh -s $(which zsh)</span><br><span class="line">sh -c &quot;$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="Install-tree-autojump"><a href="#Install-tree-autojump" class="headerlink" title="Install tree, autojump"></a>Install tree, autojump</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install tree</span><br><span class="line">sudo apt-get install autojump</span><br></pre></td></tr></table></figure>
+<h4 id="install-vim"><a href="#install-vim" class="headerlink" title="install vim"></a>install vim</h4><p><code>sudo apt-get install vim</code></p>
+<h4 id="install-spf13-vim"><a href="#install-spf13-vim" class="headerlink" title="install spf13-vim"></a>install spf13-vim</h4><p><code>curl http://j.mp/spf13-vim3 -L -o - | sh</code></p>
+<h4 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl https://raw.github.com/creationix/nvm/master/install.sh | sh</span><br><span class="line">nvm install 4</span><br><span class="line">npm install -g hexo-cli</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+<h4 id="Install-Tex"><a href="#Install-Tex" class="headerlink" title="Install Tex"></a>Install Tex</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install texlive-full</span><br><span class="line">sudo apt-get install texmaker</span><br></pre></td></tr></table></figure>
+<h4 id="Install-Atom"><a href="#Install-Atom" class="headerlink" title="Install Atom"></a>Install Atom</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Install from the official link</span><br><span class="line">Install markdown-review-plus</span><br><span class="line">install markdown-review-plus-opener</span><br></pre></td></tr></table></figure>
+<h4 id="Install-Sublime-text"><a href="#Install-Sublime-text" class="headerlink" title="Install Sublime-text"></a>Install Sublime-text</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:webupd8team/sublime-text-2</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install sublime-text</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Unix/" rel="tag"># Unix</a>
+          
+            <a href="/tags/Configure-Tool/" rel="tag"># Configure-Tool</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/24/atom-usage-tutorial/" rel="prev" title="Atom Usage Tutorial">
+                Atom Usage Tutorial <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="虫二" />
+          <p class="site-author-name" itemprop="name">虫二</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/iamtao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/iamtaol" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hardware"><span class="nav-number">1.</span> <span class="nav-text">Hardware</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-replace-16-GB-NGFF-SSD-by-128-GB-NGFF-SSD"><span class="nav-number">1.1.</span> <span class="nav-text">How to replace 16 GB NGFF SSD by 128 GB NGFF SSD</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Software"><span class="nav-number">2.</span> <span class="nav-text">Software</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Starters"><span class="nav-number">2.1.</span> <span class="nav-text">Starters</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Update-System"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">Update System</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mount-disk-and-change-the-permission"><span class="nav-number">2.1.0.2.</span> <span class="nav-text">mount disk and change the permission</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-git"><span class="nav-number">2.1.0.3.</span> <span class="nav-text">Install git</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#setup-git"><span class="nav-number">2.1.0.3.1.</span> <span class="nav-text">setup git</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#avoid-to-enter-the-password-every-time"><span class="nav-number">2.1.0.3.2.</span> <span class="nav-text">avoid to enter the password every time.</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Disable-Unity-Dash-online-search-feature"><span class="nav-number">2.1.0.4.</span> <span class="nav-text">Disable Unity Dash online search feature</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Enable-Workspaces"><span class="nav-number">2.1.0.5.</span> <span class="nav-text">Enable Workspaces</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-proper-graphics-drivers"><span class="nav-number">2.1.0.6.</span> <span class="nav-text">Install proper graphics drivers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-Ubuntu-Tweak-Tool"><span class="nav-number">2.1.0.7.</span> <span class="nav-text">Install Ubuntu Tweak Tool</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Get-themes"><span class="nav-number">2.1.0.8.</span> <span class="nav-text">Get themes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-VLC-Media-Player"><span class="nav-number">2.1.0.9.</span> <span class="nav-text">Install VLC Media Player</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-additional-media-codecs"><span class="nav-number">2.1.0.10.</span> <span class="nav-text">Install additional media codecs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-Skype"><span class="nav-number">2.1.0.11.</span> <span class="nav-text">Install Skype</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-Dropbox"><span class="nav-number">2.1.0.12.</span> <span class="nav-text">Install Dropbox</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-Archive-management-apps"><span class="nav-number">2.1.0.13.</span> <span class="nav-text">Install Archive management apps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-Java"><span class="nav-number">2.1.0.14.</span> <span class="nav-text">Install Java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-VirtualBox"><span class="nav-number">2.1.0.15.</span> <span class="nav-text">Install VirtualBox</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TLP"><span class="nav-number">2.1.0.16.</span> <span class="nav-text">TLP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Enhance-wifi"><span class="nav-number">2.1.0.17.</span> <span class="nav-text">Enhance wifi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-docker"><span class="nav-number">2.1.0.18.</span> <span class="nav-text">Install docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-zsh-and-oh-my-zsh"><span class="nav-number">2.1.0.19.</span> <span class="nav-text">Install zsh and oh-my-zsh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-tree-autojump"><span class="nav-number">2.1.0.20.</span> <span class="nav-text">Install tree, autojump</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#install-vim"><span class="nav-number">2.1.0.21.</span> <span class="nav-text">install vim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#install-spf13-vim"><span class="nav-number">2.1.0.22.</span> <span class="nav-text">install spf13-vim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-hexo"><span class="nav-number">2.1.0.23.</span> <span class="nav-text">Install hexo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-Tex"><span class="nav-number">2.1.0.24.</span> <span class="nav-text">Install Tex</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-Atom"><span class="nav-number">2.1.0.25.</span> <span class="nav-text">Install Atom</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-Sublime-text"><span class="nav-number">2.1.0.26.</span> <span class="nav-text">Install Sublime-text</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">虫二</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

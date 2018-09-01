@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep Learning,Machine Learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="copy and paste.">
+<meta name="keywords" content="Deep Learning,Machine Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A overview of gradient descent optimization algorithms">
+<meta property="og:url" content="IamTao.github.io/2017/08/13/compare-gradient-descent-algorithm/index.html">
+<meta property="og:site_name" content="庭草交翠">
+<meta property="og:description" content="copy and paste.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://shuokay.com/content/images/optimization/nesterov.jpeg">
+<meta property="og:updated_time" content="2018-09-01T13:04:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A overview of gradient descent optimization algorithms">
+<meta name="twitter:description" content="copy and paste.">
+<meta name="twitter:image" content="http://shuokay.com/content/images/optimization/nesterov.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="IamTao.github.io/2017/08/13/compare-gradient-descent-algorithm/"/>
+
+
+
+
+
+  <title>A overview of gradient descent optimization algorithms | 庭草交翠</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">庭草交翠</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="IamTao.github.io/2017/08/13/compare-gradient-descent-algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="虫二">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庭草交翠">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">A overview of gradient descent optimization algorithms</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-13T21:50:36+02:00">
+                2017-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Science/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Science</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>copy and paste.</p>
+<a id="more"></a>
+<h1 id="A-brief-comparison-of-different-gradient-descent-optimizaiton-algorithms"><a href="#A-brief-comparison-of-different-gradient-descent-optimizaiton-algorithms" class="headerlink" title="A brief comparison of different gradient descent optimizaiton algorithms"></a>A brief comparison of different gradient descent optimizaiton algorithms</h1><h2 id="Batch-based-methods"><a href="#Batch-based-methods" class="headerlink" title="Batch based methods"></a>Batch based methods</h2><h3 id="Batch-Gradient-Descent"><a href="#Batch-Gradient-Descent" class="headerlink" title="Batch Gradient Descent"></a>Batch Gradient Descent</h3><p>使用我们拿到的所有的数据计算梯度, 然后使用这个梯度对参数进行更新. 在凸函数中, 只要学习率足够小, 肯定能够找到全局最优点, 在非凸函数中也可以保证找到局部最优.</p>
+<ul>
+<li>优点<ul>
+<li>方法简单</li>
+<li>能够保证收敛到全局最优值(凸函数)/局部最优值(非凸函数)</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>训练数据太多的时候无法全部放入内存</li>
+<li>训练数据多的时候计算梯度的时间非常久</li>
+<li>无法进行 online 的更新</li>
+</ul>
+</li>
+</ul>
+<h3 id="Stochastic-Gradient-Descent"><a href="#Stochastic-Gradient-Descent" class="headerlink" title="Stochastic Gradient Descent"></a>Stochastic Gradient Descent</h3><p>和 Batch Gradient Descent 相反, SGD 又走入了另外一个极端, SGD 拿到一个数据之后, 马上计算梯度, 然后对参数进行更新.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x += - learning_rate * dx</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优点：<ul>
+<li>收敛速度快(因为在Batch 的方法中, 每次计算梯度会计算很多相似的样本得到的梯度, 这部分是冗余的)</li>
+<li>可以 online 更新</li>
+<li>有可能逃出一个比较差的局部最优而收敛到一个更好的局部最优甚至是全局最优</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>选择合适的learning rate比较困难</li>
+<li>对所有的参数更新使用同样的learning rate.对于稀疏数据或者特征,有时我们可能想更新快一些对于不经常出现的特征,对于常出现的特征更新慢一些,这时候SGD就不太能满足要求了</li>
+<li>SGD容易收敛到局部最优,并且容易被困在鞍点.</li>
+<li>无法利用矩阵操作加速计算过程</li>
+</ul>
+</li>
+</ul>
+<h3 id="Mini-batch-Gradient-Descent"><a href="#Mini-batch-Gradient-Descent" class="headerlink" title="Mini-batch Gradient Descent"></a>Mini-batch Gradient Descent</h3><p>Mini-batch 的方法是batch gradient descent和stochastic gradient descent的折衷, 每次从全部的熟练数据中取一个 mini-batch 的数据计算</p>
+<h3 id="Currnet-issues"><a href="#Currnet-issues" class="headerlink" title="Currnet issues"></a>Currnet issues</h3><p>上述 3 各方法遇到的问题是:</p>
+<ul>
+<li>如何选择一个合适的 learning rate 是非常困难的</li>
+<li>目前有一些通过 schedule 的方式来设置 learning rate 的方法, 即预先设计好计算了一定数量的迭代之后减小 learning rate, 但是, 由于是在训练之前就要设置好, 因此, 无法根据训练时的情况进行调整. 实践中也证明这种 schedule 的方法非常不可靠.</li>
+<li>上述方法中, 对于每一个参数的 learning rate 都是相同的, 这种做法是不合理的. 试想, 如果训练数据是稀疏的, 而且, 特征数据出现的频率变化很大, 那么, 比较合理的做法是, 对于出现频率低的特征设置较大的学习速率, 对于出现频率较大的特征数据设置较小的学习速率.</li>
+<li>近期的的研究表明, 深层神经网络之所以比较难训练, 并不是因为容易进入 local minimum, 相反, 由于网络结构非常复杂, 在绝大多数情况下, 即使是 local minimum 也可以得到非常好的结果. 而之所以难训练是因为学习过程容易陷入到马鞍面中, 即在坡面上, 一部分点是上升的, 一部分点是下降的. 而这种情况比较容易出现在平坦区域, 在这种区域中, 所有方向的梯度值都几乎是 0.</li>
+</ul>
+<h2 id="Some-variants-without-learning-rate-decay"><a href="#Some-variants-without-learning-rate-decay" class="headerlink" title="Some variants without learning rate decay"></a>Some variants without learning rate decay</h2><h3 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h3><p>SGD方法的一个缺点是其更新方向完全依赖于当前batch计算出的梯度,因而十分不稳定.Momentum算法借用了物理中的动量概念,它模拟的是物体运动时的惯性,即更新的时候在一定程度上保留之前更新的方向,同时利用当前batch的梯度微调最终的更新方向.它在相关方向加速SGD,抑制振荡,可以在一定程度上增加稳定性,从而加快收敛,并且还有一定摆脱局部最优的能力.</p>
+<p>他有如下公式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Momentum update</span><br><span class="line">v_t = mu * v_&#123;t - 1&#125; - learning_rate * dx       # integrate velocity</span><br><span class="line">x += v_t                                        # integrate position</span><br></pre></td></tr></table></figure></p>
+<p>Momentum算法会观察历史梯度v_{t−1},若当前梯度的方向与历史梯度一致（表明当前样本不太可能为异常点）,则会增强这个方向的梯度,若当前梯度与历史梯方向不一致,则梯度会衰减.一种形象的解释是：我们把一个球推下山,球在下坡时积聚动量,在途中变得越来越快,mu可视为空气阻力,若球的方向发生变化,则动量会衰减.mu一般设置为 0.9, 0.99 等. 然而, 把 mu 理解为摩擦(或者加上其它的因素)更好. mu 的作用是在小球在山坡上滚动的过程中来降低小球的动能.</p>
+<ul>
+<li>Principle:<ul>
+<li>在梯度指向同一方向的维度,momentum项增加;</li>
+<li>在梯度改变方向的维度,momentum项减少更新.</li>
+</ul>
+</li>
+<li>features:<ul>
+<li>下降初期时,使用上一次参数更新,下降方向一致,乘上较大的mu能够进行很好的加速</li>
+<li>下降中后期时,在局部最小值来回震荡的时候,gradient \leftarrow 0,mu使得更新幅度增大,跳出陷阱</li>
+<li>在梯度改变方向的时候,mu能够减少更新 总而言之,momentum项能够在相关方向加速SGD,抑制振荡,从而加快收敛.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Nesterov-Momentum"><a href="#Nesterov-Momentum" class="headerlink" title="Nesterov Momentum"></a>Nesterov Momentum</h3><p>在小球向下滚动的过程中, 我们希望小球能够提前知道在哪些地方坡面会上升, 这样, 在遇到上升坡面之前, 小球就开始减速. 这方法就是 Nesterov Momentum.</p>
+<p>与传统的 Momentum 稍有不同的方法, Nesterov Momentum 在凸优化中有较强的理论保证收敛, 并且,在实践中, Nesterov Momentum也比单纯的 Momentum 的效果要好.</p>
+<p>核心思想是: 注意到 momentum 方法, 如果只看 <code>mu * v</code> 项, 那么, 当前的 <code>x</code> 经过 momentum 的作用会变成 <code>x + mu * v</code>. 因此, 可以把 <code>x + mu * v</code> 这个位置看做是当前优化的一个”展望”位置, 所以, 可以在 <code>x + mu * v</code> 求导, 而不是原始的<code>x</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x_ahead = x + mu * v</span><br><span class="line"># evaluate dx_ahead (the gradient at x_ahead instead of at x)</span><br><span class="line">v = mu * v - learning_rate * dx_ahead</span><br><span class="line">x += v</span><br></pre></td></tr></table></figure>
+<p><img src="http://shuokay.com/content/images/optimization/nesterov.jpeg" alt=""></p>
+<h3 id="Decay-learning-rate"><a href="#Decay-learning-rate" class="headerlink" title="Decay learning rate"></a>Decay learning rate</h3><p>在优化的过程中, 如果学习率设置的过大, 那么, 小球就会在山谷之间跳来跳去, 无法到达最低点, 如果是非常缓慢地降低学习速率, 那么, 虽然小球跳来跳去的现象会有缓解, 但是, 效果不明显, 浪费了计算资源, 而如果快速降低学习速率, 那么, 小球可能会很快到达一个(不是那么好的)局部最优点, 而不能到达一个更好的局部最优点. 通常, 在实验中有下面三种方法:</p>
+<ul>
+<li><strong>Step decay</strong>: 每隔几个epoch减少一次learning rate, 一般是每运行5个epoch左右把learning rate减少一半, 或者是每隔20个epoch减少为原来的1/10. 然而,具体的learning rate 的调整方法还是要看网络的设计和模型. 另外, 还有一种方法是, 在训练的过程中观察training error和validation error, 当validation error不再减小的时候, 减小learning rate.</li>
+<li><strong>Exponential decay</strong></li>
+<li><strong>1/t decay</strong></li>
+</ul>
+<h2 id="Some-variants-with-learning-rate-decay"><a href="#Some-variants-with-learning-rate-decay" class="headerlink" title="Some variants with learning rate decay"></a>Some variants with learning rate decay</h2><p>momentum项是为了使梯度更新更加灵活, 有不同情况有针对性. 但是, 人工设置一些学习率总还是有些生硬, 接下来介绍几种自适应学习率的方法, 如Adagrad.</p>
+<h3 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h3><p>sgd or Momentum 对于每一个参数w_i的训练都使用了相同的学习率learning rate. Adagrad算法能够在训练中自动的对learning rate进行调整, 对于出现频率较低参数采用较大的learning rate更新; 相反,对于出现频率较高的参数采用较小的learningrate更新. 因此, Adagrad非常适合处理稀疏数据.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Assume the gradient dx and parameter vector x</span><br><span class="line">cache += dx**2</span><br><span class="line">x += - learning_rate * dx / np.sqrt(cache + eps)</span><br></pre></td></tr></table></figure>
+<p><code>cache</code>的大小和<code>gradient</code>的大小相同, 记录的是每个参数的梯度的平方和. 之后,<code>cache</code>用来以<code>element-wise</code>的方式normalize参数的更新.<br>我们可以看出：梯度较高的权重的有效 learning rate 会减小, 相应的梯度较低的权重的有效 learning rate 会增大.<br>sqrt 操作非常重要,如果没有 sqrt 操作, 该算法的效果非常差. eps 用来避免出现除 0 错误的,一般设置为 10-4 到 10-8 之间.</p>
+<ul>
+<li>drawbacks:<ul>
+<li>因为公式中分母上会累加梯度平方, 这样在训练中持续增大的话, 会使学习率非常小, 甚至趋近无穷小.</li>
+<li>Adagrad的缺点是在训练的中后期, 分母上梯度平方的累加将会越来越大, 从而梯度趋近于0, 使得训练提前结束.</li>
+<li>由公式可以看出, 仍依赖于人工设置一个全局学习率.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Adadelta"><a href="#Adadelta" class="headerlink" title="Adadelta"></a>Adadelta</h3><p>AdaGrad 方法比较激进, 会过早结束优化过程, AdaDelta 的目的就是为了解决这个问题.<br>在 AdaGrad 中对 learning rate 进行 normalize 的参数是使用之前所有时间得到的梯度的累积, AdaDelta 的思想是通过设置窗口 w, 只使用部分时间的梯度累积.<br>AdaGrad的最初方案依然是对学习率进行自适应约束, 但是进行了计算上的简化. Adagrad会累加之前所有的梯度平方, 而Adadelta只累加固定大小的项, 并且也不直接存储这些项, 仅仅是近似计算对应的平均值:<br>在实际使用中, 其算法并没有存储前 w 个梯度然后计算, 而是类似与 moving average 的方法. 在任意一个时间 t, 当前的 normalize 的参数是 t-1 时刻的参数和当前的梯度做加权求和.</p>
+<p>原始Adadelta,还是依赖于全局学习率的,但是作者做了一定处理,经过近似牛顿迭代法之后, Adadelta已经不用依赖于全局学习率了.</p>
+<ul>
+<li>features:<ul>
+<li>训练初中期,加速效果不错,很快</li>
+<li>训练后期,反复在局部最小值附近抖动</li>
+</ul>
+</li>
+</ul>
+<h3 id="RMSProp"><a href="#RMSProp" class="headerlink" title="RMSProp"></a>RMSProp</h3><p>RMSProp 对 AdaGrad 稍作改进, 是的算法不再像 AdaGrad 那么激进 它使用的是 moving average of squared gradients.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cache = decay_rate * cache + (1 - decay_rate) * dx**2</span><br><span class="line">x += - learning_rate * dx / (np.sqrt(cache) + eps)</span><br></pre></td></tr></table></figure>
+<h3 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h3><p>Adam(Adaptive Moment Estimation)是另一种自适应学习率的方法.Adam加上了bias校正和momentum,在优化末期,梯度更稀疏时,它比RMSprop稍微好点.它利用梯度的一阶矩估计和二阶矩估计动态调整每个参数的学习率.Adam的优点主要在于经过偏置校正后,每一次迭代学习率都有个确定范围,使得参数比较平稳.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">m = beta1*m + (1-beta1)*dx</span><br><span class="line">v = beta2*v + (1-beta2)*(dx**2)</span><br><span class="line">x += - learning_rate * m / (np.sqrt(v) + eps)</span><br></pre></td></tr></table></figure>
+<p>该方法和 RMSProp 唯一的区别是 “smooth” 过程, 这里使用的是 <code>m</code> 来做 smooth 操作, 而不是使用原始的 gradient vector <code>dx</code>.</p>
+<p>在实际应用中 ,Adam为最常用的方法,可以比较快地得到一个预估结果.</p>
+<ul>
+<li>features:<ul>
+<li>结合了Adagrad善于处理稀疏梯度和RMSprop善于处理非平稳目标的优点</li>
+<li>对内存需求较小</li>
+<li>为不同的参数计算不同的自适应学习率</li>
+<li>也适用于大多非凸优化 - 适用于大数据集和高维空间</li>
+</ul>
+</li>
+</ul>
+<h2 id="A-short-summary"><a href="#A-short-summary" class="headerlink" title="A short summary"></a>A short summary</h2><p>另外, 在数据比较稀疏的时候, adaptive的方法能得到更好的效果, 例如Adagrad, RMSprop, Adam 等. Adam方法也会比RMSprop方法收敛的结果要好一些.<br>另外, 也可以尝试 SGD+Nesterov Momentum.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/05/a-comparison-of-distributed-machine/" rel="next" title="A Comparison of Distributed Machine Learning Platforms">
+                <i class="fa fa-chevron-left"></i> A Comparison of Distributed Machine Learning Platforms
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/16/how-to-use-pretrained-model/" rel="prev" title="How to use pretrained model">
+                How to use pretrained model <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="虫二" />
+          <p class="site-author-name" itemprop="name">虫二</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/iamtao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/iamtaol" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#A-brief-comparison-of-different-gradient-descent-optimizaiton-algorithms"><span class="nav-number">1.</span> <span class="nav-text">A brief comparison of different gradient descent optimizaiton algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Batch-based-methods"><span class="nav-number">1.1.</span> <span class="nav-text">Batch based methods</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Batch-Gradient-Descent"><span class="nav-number">1.1.1.</span> <span class="nav-text">Batch Gradient Descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stochastic-Gradient-Descent"><span class="nav-number">1.1.2.</span> <span class="nav-text">Stochastic Gradient Descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mini-batch-Gradient-Descent"><span class="nav-number">1.1.3.</span> <span class="nav-text">Mini-batch Gradient Descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Currnet-issues"><span class="nav-number">1.1.4.</span> <span class="nav-text">Currnet issues</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-variants-without-learning-rate-decay"><span class="nav-number">1.2.</span> <span class="nav-text">Some variants without learning rate decay</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Momentum"><span class="nav-number">1.2.1.</span> <span class="nav-text">Momentum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nesterov-Momentum"><span class="nav-number">1.2.2.</span> <span class="nav-text">Nesterov Momentum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decay-learning-rate"><span class="nav-number">1.2.3.</span> <span class="nav-text">Decay learning rate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-variants-with-learning-rate-decay"><span class="nav-number">1.3.</span> <span class="nav-text">Some variants with learning rate decay</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Adagrad"><span class="nav-number">1.3.1.</span> <span class="nav-text">Adagrad</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adadelta"><span class="nav-number">1.3.2.</span> <span class="nav-text">Adadelta</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RMSProp"><span class="nav-number">1.3.3.</span> <span class="nav-text">RMSProp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adam"><span class="nav-number">1.3.4.</span> <span class="nav-text">Adam</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-short-summary"><span class="nav-number">1.4.</span> <span class="nav-text">A short summary</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">虫二</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Unix," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content=".">
+<meta name="keywords" content="Unix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="An Introduction to Linux I&#x2F;O Redirection">
+<meta property="og:url" content="IamTao.github.io/2017/08/03/unix-io-redirection/index.html">
+<meta property="og:site_name" content="庭草交翠">
+<meta property="og:description" content=".">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-09-01T13:04:23.027Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="An Introduction to Linux I&#x2F;O Redirection">
+<meta name="twitter:description" content=".">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="IamTao.github.io/2017/08/03/unix-io-redirection/"/>
+
+
+
+
+
+  <title>An Introduction to Linux I/O Redirection | 庭草交翠</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">庭草交翠</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="IamTao.github.io/2017/08/03/unix-io-redirection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="虫二">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庭草交翠">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">An Introduction to Linux I/O Redirection</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-03T16:11:46+02:00">
+                2017-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Wiki/" itemprop="url" rel="index">
+                    <span itemprop="name">Wiki</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>.</p>
+<a id="more"></a>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>The redirection capabilities built into Linux provide you with a robust set of tools used to make all sorts of tasks easier to accomplish. Whether you’re writing complex software or performing file management through the command line, knowing how to manipulate the different I/O streams in your environment will greatly increase your productivity.</p>
+<h2 id="Streams"><a href="#Streams" class="headerlink" title="Streams"></a>Streams</h2><p>Input and output in the Linux environment is distributed across three streams. These streams are:</p>
+<ul>
+<li>standard input (stdin), numbered 0</li>
+<li>standard output (stdout), numbered 1</li>
+<li>standard error (stderr), numbered 2</li>
+</ul>
+<p>During standard interactions between the user and the terminal, standard input is transmitted through the user’s keyboard. Standard output and standard error are displayed on the user’s terminal as text. Collectively, the three streams are referred to as the <em>standard streams</em>.</p>
+<h3 id="Standard-Input"><a href="#Standard-Input" class="headerlink" title="Standard Input"></a>Standard Input</h3><p>The standard input stream typically carries data from a user to a program. Programs that expect standard input usually receive input from a device, such as a keyboard. Standard input is terminated by reaching EOF (end-of-file). As described by its name, EOF indicates that there is no more data to be read.</p>
+<p>After opening cat, type a series of numbers as it is running.</p>
+<p>When you type a number and press enter, you are sending standard input to the running cat program, which is expecting said input. In turn, the cat program is sending your input back to the terminal display as standard output.</p>
+<p>EOF can be input by the user by pressing ctrl-d. After the cat program receives EOF, it stops.</p>
+<h3 id="Standard-Output"><a href="#Standard-Output" class="headerlink" title="Standard Output"></a>Standard Output</h3><p>Standard output writes the data that is generated by a program. When the standard output stream is not redirected, it will output text to the terminal.</p>
+<p>When used without any additional options, the <code>echo</code> command displays any argument that is passed to it on the command line. An argument is something that is received by a program.</p>
+<p>Run echo without any arguments, and it will return an empty line, since there are no arguments.</p>
+<h3 id="Standard-Error"><a href="#Standard-Error" class="headerlink" title="Standard Error"></a>Standard Error</h3><p>Standard error writes the errors generated by a program that has failed at some point in its execution. Like standard output, the default destination for this stream is the terminal display.</p>
+<p>When a program’s standard error stream is piped to a second program, the piped data (consisting of program errors) is simultaneously sent to the terminal as well.</p>
+<h3 id="Stream-Redirection"><a href="#Stream-Redirection" class="headerlink" title="Stream Redirection"></a>Stream Redirection</h3><p>Linux includes redirection commands for each stream. These commands write standard output to a file. If a non-existent file is targetted (either by a single-bracket or double-bracket command), a new file with that name will be created prior to writing.</p>
+<ul>
+<li><strong>overwrite</strong>: Commands with a single bracket overwrite the destination’s existing contents.<ul>
+<li><code>&gt;</code>: standard output</li>
+<li><code>&lt;</code>: standard input</li>
+<li><code>2&gt;</code>:</li>
+</ul>
+</li>
+<li><strong>Append</strong>: Commands with a double bracket do not overwrite the destination’s existing contents.<ul>
+<li><code>&gt;&gt;</code>: standard output</li>
+<li><code>&lt;&lt;</code>: standard input</li>
+<li><code>2&gt;&gt;</code>: standard error</li>
+</ul>
+</li>
+</ul>
+<h3 id="Pipes"><a href="#Pipes" class="headerlink" title="Pipes"></a>Pipes</h3><p>Pipes are used to redirect a stream from one program to another. When a program’s standard output is sent to another through a pipe, the first program’s data, which is received by the second program, will not be displayed on the terminal. Only the filtered data returned by the second program will be displayed.</p>
+<p>The Linux <em>pipe</em> is represented by a vertical bar.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*|*</span><br></pre></td></tr></table></figure></p>
+<p>An example of a command using a pipe:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ls | less</span><br><span class="line">Data</span><br><span class="line">Desktop</span><br><span class="line">Documents</span><br><span class="line">(END)</span><br></pre></td></tr></table></figure></p>
+<p>This takes the output of ls, which displays the contents of your current directory, and <em>pipes</em> it to the less program. <code>less</code> displays the data sent to it one line at a time.</p>
+<p><code>ls</code> normally displays directory contents across multiple rows. When you run it through <code>less</code>, each entry is placed on a new line.</p>
+<p>Though the functionality of the pipe may appear to be similar to that of <code>&gt;</code> and <code>&gt;&gt;</code> (standard output redirect), the distinction is that pipes redirect data from one command to another, while <code>&gt;</code> and <code>&gt;&gt;</code> are used to redirect exclusively to files.</p>
+<h3 id="Filters"><a href="#Filters" class="headerlink" title="Filters"></a>Filters</h3><p><em>Filters</em> are commands that alter piped redirection and output. Note that filter commands are also standard Linux commands that can be used without pipes.</p>
+<ul>
+<li><code>find</code>: Find returns files with filenames that match the argument passed to find.</li>
+<li><code>grep</code>: Grep returns text that matches the string pattern passed to grep.</li>
+<li><code>tee</code>: Tee redirects standard input to both standard output and one or more files.</li>
+<li><code>tr</code>: tr finds-and-replaces one string with another.</li>
+<li><code>wc</code>: wc counts characters, lines, and words.</li>
+</ul>
+<h2 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h2><h4 id="command-gt-file"><a href="#command-gt-file" class="headerlink" title="command &gt; file"></a>command &gt; file</h4><p>This pattern redirects the standard output of a command to a file.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls ~ &gt; root_dir_contents.txt</span><br></pre></td></tr></table></figure></p>
+<h4 id="command-gt-dev-null"><a href="#command-gt-dev-null" class="headerlink" title="command &gt; /dev/null"></a>command &gt; /dev/null</h4><p><code>/dev/null</code> is a special file that is used to trash any data that is redirected to it. It is used to discard standard output that is not needed, and that might otherwise interfere with the functionality of a command or a script. Any output that is sent to <code>/dev/null</code> is discarded.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls &gt; /dev/null</span><br></pre></td></tr></table></figure>
+<p>This command discards the standard output stream returned from the command ls by passing it to <code>/dev/null</code>.</p>
+<h4 id="command-2-gt-file"><a href="#command-2-gt-file" class="headerlink" title="command 2&gt; file"></a>command 2&gt; file</h4><p>This pattern redirects the standard error stream of a command to a file, overwriting existing contents.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir &apos;&apos; 2&gt; mkdir_log.txt</span><br></pre></td></tr></table></figure></p>
+<p>This redirects the error raised by the invalid directory name ‘’, and writes it to log.txt. Note that the error is still sent to the terminal and displayed as text.</p>
+<h4 id="command-gt-gt-file"><a href="#command-gt-gt-file" class="headerlink" title="command &gt;&gt; file"></a>command &gt;&gt; file</h4><p>This pattern redirects the standard output of a command to a file without overwriting the file’s existing contents.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo Written to a new file &gt; data.txt</span><br><span class="line">echo Appended to an existing file&apos;s contents &gt;&gt; data.txt</span><br></pre></td></tr></table></figure></p>
+<p>This pair of commands first redirects the text inputted by the user through echo to a new file. It then appends the text received by the second echo command to the existing file, without overwriting its contents.</p>
+<h4 id="command-2-gt-gt-file"><a href="#command-2-gt-gt-file" class="headerlink" title="command 2&gt;&gt; file"></a>command 2&gt;&gt; file</h4><p>The pattern above redirects the standard error stream of a command to a file without overwriting the file’s existing contents. This pattern is useful for creating error logs for a program or service, as the log file will not have its previous content wiped each time the file is written to.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find &apos;&apos; 2&gt; stderr_log.txt</span><br><span class="line">wc &apos;&apos; 2&gt;&gt; stderr_log.txt</span><br></pre></td></tr></table></figure></p>
+<p>The above command redirects the error message caused by an invalid find argument to a file named stderr_log.txt. It then appends the error message caused by an invalid wc argument to the same file.</p>
+<h4 id="command-command"><a href="#command-command" class="headerlink" title="command | command"></a>command | command</h4><p>Redirects the standard output from the first command to the standard input of the second command.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /var lib | grep deb</span><br></pre></td></tr></table></figure></p>
+<p>This command searches through /var and its subfolders for filenames and extensions that match the string deb, and returns the file paths for the files, with the matching portion in each path highlighted in red.</p>
+<h4 id="command-tee-file"><a href="#command-tee-file" class="headerlink" title="command | tee file"></a>command | tee file</h4><p>This pattern (which includes the tee command) redirects the standard output of the command to a file and overwrites its contents. Then, it displays the redirected output in the terminal. It creates a new file if the file does not already exist.</p>
+<p>In the context of this pattern, tee is typically used to view a program’s output while simultaneously saving it to a file.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wc /etc/magic | tee magic_count.txt</span><br></pre></td></tr></table></figure></p>
+<p>This pipes the counts for characters, lines, and words in the magic file (used by the Linux shell to determine file types) to the tee command, which then splits wc’s output in two directions, and sends it to the terminal display and the magic_count.txt file.</p>
+<h4 id="command-command-command-gt-gt-file"><a href="#command-command-command-gt-gt-file" class="headerlink" title="command | command | command &gt;&gt; file"></a>command | command | command &gt;&gt; file</h4><p>This pattern predirects the standard output of the first command and filters it through the next two commands. It then appends the final result to a file.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls ~ | grep *tar | tr e E &gt;&gt; ls_log.txt</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Unix/" rel="tag"># Unix</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/03/unix-permission/" rel="next" title="An Introduction to Linux Permission and Some Basics Usages">
+                <i class="fa fa-chevron-left"></i> An Introduction to Linux Permission and Some Basics Usages
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/03/unix-introduce-unix/" rel="prev" title="An Introduction to the Linux Terminal">
+                An Introduction to the Linux Terminal <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="虫二" />
+          <p class="site-author-name" itemprop="name">虫二</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/iamtao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/iamtaol" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Streams"><span class="nav-number">1.1.</span> <span class="nav-text">Streams</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard-Input"><span class="nav-number">1.1.1.</span> <span class="nav-text">Standard Input</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard-Output"><span class="nav-number">1.1.2.</span> <span class="nav-text">Standard Output</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard-Error"><span class="nav-number">1.1.3.</span> <span class="nav-text">Standard Error</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stream-Redirection"><span class="nav-number">1.1.4.</span> <span class="nav-text">Stream Redirection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pipes"><span class="nav-number">1.1.5.</span> <span class="nav-text">Pipes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filters"><span class="nav-number">1.1.6.</span> <span class="nav-text">Filters</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Examples"><span class="nav-number">1.2.</span> <span class="nav-text">Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#command-gt-file"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">command &gt; file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#command-gt-dev-null"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">command &gt; /dev/null</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#command-2-gt-file"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">command 2&gt; file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#command-gt-gt-file"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">command &gt;&gt; file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#command-2-gt-gt-file"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">command 2&gt;&gt; file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#command-command"><span class="nav-number">1.2.0.6.</span> <span class="nav-text">command | command</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#command-tee-file"><span class="nav-number">1.2.0.7.</span> <span class="nav-text">command | tee file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#command-command-command-gt-gt-file"><span class="nav-number">1.2.0.8.</span> <span class="nav-text">command | command | command &gt;&gt; file</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">虫二</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

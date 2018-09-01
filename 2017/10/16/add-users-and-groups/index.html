@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Unix," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content=".">
+<meta name="keywords" content="Unix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Control users and the corresponding groups">
+<meta property="og:url" content="IamTao.github.io/2017/10/16/add-users-and-groups/index.html">
+<meta property="og:site_name" content="庭草交翠">
+<meta property="og:description" content=".">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-09-01T13:04:22.998Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Control users and the corresponding groups">
+<meta name="twitter:description" content=".">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="IamTao.github.io/2017/10/16/add-users-and-groups/"/>
+
+
+
+
+
+  <title>Control users and the corresponding groups | 庭草交翠</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">庭草交翠</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="IamTao.github.io/2017/10/16/add-users-and-groups/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="虫二">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庭草交翠">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Control users and the corresponding groups</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-16T18:52:47+02:00">
+                2017-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Wiki/" itemprop="url" rel="index">
+                    <span itemprop="name">Wiki</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>.</p>
+<a id="more"></a>
+<h1 id="Usage-overview"><a href="#Usage-overview" class="headerlink" title="Usage overview"></a>Usage overview</h1><p>Simply create a user with password.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># add user information</span><br><span class="line">useradd --shell /bin/zsh --create-home $&#123;USER_NAME&#125;</span><br><span class="line"># set password</span><br><span class="line">echo &quot;$&#123;USER_NAME&#125;:$&#123;USER_NAME&#125;&quot; | chpasswd</span><br><span class="line">usermod -aG sudo,adm $&#123;USER_NAME&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Add-user"><a href="#Add-user" class="headerlink" title="Add user"></a>Add user</h1><h2 id="How-to-Add-a-New-User-in-Linux"><a href="#How-to-Add-a-New-User-in-Linux" class="headerlink" title="How to Add a New User in Linux"></a>How to Add a New User in Linux</h2><p>Use <code>useradd</code> or <code>adduser</code> with <code>username</code> to add/create a new user. Only one user can be added and that username must be unique.</p>
+<p>For example, to add a new user <code>lin</code>, use the following command:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo useradd lin</span><br></pre></td></tr></table></figure></p>
+<p>When we add a new user in Linux with <code>useradd</code> command it gets created in locked state and to unlock that user account, we need to set a password for that account with <code>passwd</code> command.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="comment"># passwd lin</span></span><br><span class="line">Changing password <span class="keyword">for</span> user lin.</span><br><span class="line">New UNIX password:</span><br><span class="line">Retype new UNIX password:</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br></pre></td></tr></table></figure></p>
+<p>Once a new user created, it’s entry automatically added to the <code>/etc/passwd</code> file. The file is used to store users information and the entry should be.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lin:x:504:504:lin:/home/lin:/bin/bash</span><br></pre></td></tr></table></figure></p>
+<p>The above entry contains a set of seven colon-separated fields, each field has it’s own meaning:</p>
+<ul>
+<li>Username</li>
+<li>Password</li>
+<li>User ID (UID)</li>
+<li>Group ID (GID)</li>
+<li>User Info</li>
+<li>Home Directory</li>
+<li>Shell</li>
+</ul>
+<h2 id="Create-a-User-with-Different-Home-Directory"><a href="#Create-a-User-with-Different-Home-Directory" class="headerlink" title="Create a User with Different Home Directory"></a>Create a User with Different Home Directory</h2><p>By default <code>useradd</code> command creates a user’s home directory under /home directory with username.</p>
+<p>However, this action can be changed by using ‘-d’ option along with the location of new home directory:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ useradd -d /data lin</span><br></pre></td></tr></table></figure></p>
+<h2 id="Create-a-User-with-Specific-User-ID"><a href="#Create-a-User-with-Specific-User-ID" class="headerlink" title="Create a User with Specific User ID"></a>Create a User with Specific User ID</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ useradd -u 666 lin</span><br></pre></td></tr></table></figure>
+<p>Let’s verify that the user created with a defined userid (999) using following command.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/passwd | grep lin</span><br></pre></td></tr></table></figure></p>
+<h2 id="Create-a-User-with-Specific-Group-ID"><a href="#Create-a-User-with-Specific-Group-ID" class="headerlink" title="Create a User with Specific Group ID"></a>Create a User with Specific Group ID</h2><p>In the following example, we will add a user <code>lin</code> with a specific UID and GID simultaneously with the help of <code>-u</code> and <code>-g</code> options.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ useradd -u 1000 -g 500 lin</span><br></pre></td></tr></table></figure></p>
+<h2 id="Add-a-User-to-Multiple-Groups"><a href="#Add-a-User-to-Multiple-Groups" class="headerlink" title="Add a User to Multiple Groups"></a>Add a User to Multiple Groups</h2><p>The <code>-G</code> option is used to add a user to additional groups. Each group name is separated by a comma, with no intervening spaces.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ useradd -G admins,webadmin,developers lin</span><br></pre></td></tr></table></figure></p>
+<p>Next, verify that the multiple groups assigned to the user with id command.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ id lin</span><br></pre></td></tr></table></figure></p>
+<h2 id="Add-a-User-without-Home-Directory"><a href="#Add-a-User-without-Home-Directory" class="headerlink" title="Add a User without Home Directory"></a>Add a User without Home Directory</h2><p>To create user’s without their home directories, <code>-M</code> is used. Perhaps for security reasons.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ useradd -M lin</span><br></pre></td></tr></table></figure></p>
+<h2 id="Create-a-User-with-Account-Expiry-Date"><a href="#Create-a-User-with-Account-Expiry-Date" class="headerlink" title="Create a User with Account Expiry Date"></a>Create a User with Account Expiry Date</h2><p>By default, when we add user’s with ‘useradd’ command user account never get expires, i.e., their expiry date is set to 0 (means never expired).</p>
+<p>However, we can set the expiry date using ‘-e’ option, that sets date in <code>YYYY-MM-DD</code> format. This is helpful for creating temporary accounts for a specific period of time.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ useradd -e 2014-03-27 lin</span><br></pre></td></tr></table></figure></p>
+<p>Let’s verify the age of account and password with <code>chage</code> command for user <code>aparna</code> after setting account expiry date.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chage -l lin</span><br></pre></td></tr></table></figure></p>
+<h2 id="Create-a-User-with-Password-Expiry-Date"><a href="#Create-a-User-with-Password-Expiry-Date" class="headerlink" title="Create a User with Password Expiry Date"></a>Create a User with Password Expiry Date</h2><p>The <code>-f</code> argument is used to define the number of days after a password expires. A value of 0 inactive the user account as soon as the password has expired. By default, the password expiry value set to -1 means never expire.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ useradd -e 2014-04-27 -f 45 lin</span><br></pre></td></tr></table></figure></p>
+<h2 id="Add-a-User-with-Custom-Comments"><a href="#Add-a-User-with-Custom-Comments" class="headerlink" title="Add a User with Custom Comments"></a>Add a User with Custom Comments</h2><p>The <code>-c</code> option allows you to add custom comments, such as user’s full name, phone number, etc to <code>/etc/passwd</code> file. The comment can be added as a single line without any spaces.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -c <span class="string">"test"</span> lin</span><br></pre></td></tr></table></figure>
+<h2 id="Change-User-Login-Shell"><a href="#Change-User-Login-Shell" class="headerlink" title="Change User Login Shell"></a>Change User Login Shell</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -s /sbin/nologin lin</span><br></pre></td></tr></table></figure>
+<h2 id="Add-a-User-with-Specific-Home-Directory-Default-Shell-and-Custom-Comment"><a href="#Add-a-User-with-Specific-Home-Directory-Default-Shell-and-Custom-Comment" class="headerlink" title="Add a User with Specific Home Directory, Default Shell and Custom Comment"></a>Add a User with Specific Home Directory, Default Shell and Custom Comment</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -m -d /var/www/ravi -s /bin/bash -c <span class="string">"test"</span> -U lin</span><br></pre></td></tr></table></figure>
+<p>where <code>-m -d</code> option creates a user with specified home directory, <code>-s</code> option set the user’s default shell, <code>-c</code> option adds the extra information, <code>-U</code> argument create/adds a group with the same name as the user.</p>
+<h2 id="Add-a-User-with-Home-Directory-Custom-Shell-Custom-Comment-and-UID-GID"><a href="#Add-a-User-with-Home-Directory-Custom-Shell-Custom-Comment-and-UID-GID" class="headerlink" title="Add a User with Home Directory, Custom Shell, Custom Comment and UID/GID"></a>Add a User with Home Directory, Custom Shell, Custom Comment and UID/GID</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -m -d /var/www/tarunika -s /bin/zsh -c <span class="string">"TecMint Technical Writer"</span> -u 1000 -g 1000 lin</span><br></pre></td></tr></table></figure>
+<h2 id="Add-a-User-without-Home-Directory-No-Shell-No-Group-and-Custom-Comment"><a href="#Add-a-User-without-Home-Directory-No-Shell-No-Group-and-Custom-Comment" class="headerlink" title="Add a User without Home Directory, No Shell, No Group and Custom Comment"></a>Add a User without Home Directory, No Shell, No Group and Custom Comment</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -M -N -r -s /bin/<span class="literal">false</span> -c <span class="string">"Disabled TecMint Member"</span> lin</span><br></pre></td></tr></table></figure>
+<h1 id="Add-group"><a href="#Add-group" class="headerlink" title="Add group"></a>Add group</h1><h2 id="Add-a-New-Group"><a href="#Add-a-New-Group" class="headerlink" title="Add a New Group"></a>Add a New Group</h2><p>To add a new group, all you need to do is use the groupadd command like so:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd &lt;groupname&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Create-new-group-with-a-specific-groupID"><a href="#Create-new-group-with-a-specific-groupID" class="headerlink" title="Create new group with a specific groupID"></a>Create new group with a specific groupID</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd &lt;groupName&gt; -g &lt;groupID&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Check-if-group-exists-in-etc-group-file"><a href="#Check-if-group-exists-in-etc-group-file" class="headerlink" title="Check if group exists in /etc/group file"></a>Check if group exists in <code>/etc/group</code> file</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">egrep -i <span class="string">"^groupname"</span> /etc/group</span><br></pre></td></tr></table></figure>
+<p>or<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groups</span><br></pre></td></tr></table></figure></p>
+<h2 id="Add-an-Existing-User-to-a-Group"><a href="#Add-an-Existing-User-to-a-Group" class="headerlink" title="Add an Existing User to a Group"></a>Add an Existing User to a Group</h2><p>Next we’ll add a user to the group, using this syntax:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -a -G &lt;groupname&gt; username</span><br></pre></td></tr></table></figure></p>
+<h2 id="Assign-the-permission-of-a-specific-User-to-a-directory"><a href="#Assign-the-permission-of-a-specific-User-to-a-directory" class="headerlink" title="Assign the permission of a specific User to a directory."></a>Assign the permission of a specific User to a directory.</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -Rv &lt;user&gt; &lt;dir&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Change-group-ownership-of-everything-inside-the-directory"><a href="#Change-group-ownership-of-everything-inside-the-directory" class="headerlink" title="Change group ownership of everything inside the directory"></a>Change group ownership of everything inside the directory</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chgrp -R &lt;group name&gt; &lt;folder&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Change-a-User’s-Primary-Group"><a href="#Change-a-User’s-Primary-Group" class="headerlink" title="Change a User’s Primary Group"></a>Change a User’s Primary Group</h2><p>Sometimes you might want to switch out the primary group that a user is assigned to, which you can do with this command:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -g &lt;groupname&gt; username</span><br></pre></td></tr></table></figure></p>
+<h2 id="Add-a-New-User-and-Assign-a-Group-in-One-Command"><a href="#Add-a-New-User-and-Assign-a-Group-in-One-Command" class="headerlink" title="Add a New User and Assign a Group in One Command"></a>Add a New User and Assign a Group in One Command</h2><p>Sometimes you might need to add a new user that has access to a particular resource or directory, like adding a new FTP user. You can do so with the useradd command:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -g &lt;groupname&gt; username</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Unix/" rel="tag"># Unix</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/12/how-to-add-a-gif-file-to-my-latex-file/" rel="next" title="How to add a gif file to my latex file">
+                <i class="fa fa-chevron-left"></i> How to add a gif file to my latex file
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/25/address-NVIDIA-NVML-Driver-Library-Version-Mismatch/" rel="prev" title="Address NVIDIA NVML Driver Library Version Mismatch">
+                Address NVIDIA NVML Driver Library Version Mismatch <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="虫二" />
+          <p class="site-author-name" itemprop="name">虫二</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/iamtao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/iamtaol" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Usage-overview"><span class="nav-number">1.</span> <span class="nav-text">Usage overview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Add-user"><span class="nav-number">2.</span> <span class="nav-text">Add user</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Add-a-New-User-in-Linux"><span class="nav-number">2.1.</span> <span class="nav-text">How to Add a New User in Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-User-with-Different-Home-Directory"><span class="nav-number">2.2.</span> <span class="nav-text">Create a User with Different Home Directory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-User-with-Specific-User-ID"><span class="nav-number">2.3.</span> <span class="nav-text">Create a User with Specific User ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-User-with-Specific-Group-ID"><span class="nav-number">2.4.</span> <span class="nav-text">Create a User with Specific Group ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-a-User-to-Multiple-Groups"><span class="nav-number">2.5.</span> <span class="nav-text">Add a User to Multiple Groups</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-a-User-without-Home-Directory"><span class="nav-number">2.6.</span> <span class="nav-text">Add a User without Home Directory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-User-with-Account-Expiry-Date"><span class="nav-number">2.7.</span> <span class="nav-text">Create a User with Account Expiry Date</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-User-with-Password-Expiry-Date"><span class="nav-number">2.8.</span> <span class="nav-text">Create a User with Password Expiry Date</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-a-User-with-Custom-Comments"><span class="nav-number">2.9.</span> <span class="nav-text">Add a User with Custom Comments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Change-User-Login-Shell"><span class="nav-number">2.10.</span> <span class="nav-text">Change User Login Shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-a-User-with-Specific-Home-Directory-Default-Shell-and-Custom-Comment"><span class="nav-number">2.11.</span> <span class="nav-text">Add a User with Specific Home Directory, Default Shell and Custom Comment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-a-User-with-Home-Directory-Custom-Shell-Custom-Comment-and-UID-GID"><span class="nav-number">2.12.</span> <span class="nav-text">Add a User with Home Directory, Custom Shell, Custom Comment and UID/GID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-a-User-without-Home-Directory-No-Shell-No-Group-and-Custom-Comment"><span class="nav-number">2.13.</span> <span class="nav-text">Add a User without Home Directory, No Shell, No Group and Custom Comment</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Add-group"><span class="nav-number">3.</span> <span class="nav-text">Add group</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-a-New-Group"><span class="nav-number">3.1.</span> <span class="nav-text">Add a New Group</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-new-group-with-a-specific-groupID"><span class="nav-number">3.2.</span> <span class="nav-text">Create new group with a specific groupID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Check-if-group-exists-in-etc-group-file"><span class="nav-number">3.2.1.</span> <span class="nav-text">Check if group exists in /etc/group file</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-an-Existing-User-to-a-Group"><span class="nav-number">3.3.</span> <span class="nav-text">Add an Existing User to a Group</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Assign-the-permission-of-a-specific-User-to-a-directory"><span class="nav-number">3.4.</span> <span class="nav-text">Assign the permission of a specific User to a directory.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Change-group-ownership-of-everything-inside-the-directory"><span class="nav-number">3.5.</span> <span class="nav-text">Change group ownership of everything inside the directory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Change-a-User’s-Primary-Group"><span class="nav-number">3.6.</span> <span class="nav-text">Change a User’s Primary Group</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-a-New-User-and-Assign-a-Group-in-One-Command"><span class="nav-number">3.7.</span> <span class="nav-text">Add a New User and Assign a Group in One Command</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">虫二</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

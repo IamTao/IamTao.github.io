@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Distributed System," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="A summary from this blogand this paper.">
+<meta name="keywords" content="Distributed System">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Comparison of Distributed Machine Learning Platforms">
+<meta property="og:url" content="IamTao.github.io/2017/08/05/a-comparison-of-distributed-machine/index.html">
+<meta property="og:site_name" content="庭草交翠">
+<meta property="og:description" content="A summary from this blogand this paper.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://4.bp.blogspot.com/-cN_-PWvDGCs/WX6pgpqlTSI/AAAAAAAAGbw/vp4ttIiQ5jAGmjllTEyMrFq200uDWyalQCK4BGAYYCw/s400/sparkArch.png">
+<meta property="og:image" content="https://4.bp.blogspot.com/-_KxjkVBsznQ/WX6pcFQ7C5I/AAAAAAAAGbo/GYdLBgVqY78ZEllZ971WoHmBAbnDRayAgCK4BGAYYCw/s400/apache.png">
+<meta property="og:image" content="https://3.bp.blogspot.com/-cFL80lqWCCo/WX6pk2jzcdI/AAAAAAAAGb4/XFYSzGWsD6UPhrewWEll5w61g-vbYAYYwCK4BGAYYCw/s400/pmlsArch.png">
+<meta property="og:image" content="https://1.bp.blogspot.com/-LToYY4Kj2YE/WX6pod_r5pI/AAAAAAAAGcA/Ls-ZWfTebYk_sc3l2pCHRAWv9e6U_eT_gCK4BGAYYCw/s400/tf.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dmlc/dmlc.github.io/master/img/mxnet/system/overview.png">
+<meta property="og:updated_time" content="2018-09-01T13:04:22.997Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Comparison of Distributed Machine Learning Platforms">
+<meta name="twitter:description" content="A summary from this blogand this paper.">
+<meta name="twitter:image" content="https://4.bp.blogspot.com/-cN_-PWvDGCs/WX6pgpqlTSI/AAAAAAAAGbw/vp4ttIiQ5jAGmjllTEyMrFq200uDWyalQCK4BGAYYCw/s400/sparkArch.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="IamTao.github.io/2017/08/05/a-comparison-of-distributed-machine/"/>
+
+
+
+
+
+  <title>A Comparison of Distributed Machine Learning Platforms | 庭草交翠</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">庭草交翠</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="IamTao.github.io/2017/08/05/a-comparison-of-distributed-machine/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="虫二">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庭草交翠">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">A Comparison of Distributed Machine Learning Platforms</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-05T14:52:19+02:00">
+                2017-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Science/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Science</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>A summary from <a href="http://muratbuffalo.blogspot.ch/2017/07/a-comparison-of-distributed-machine.html" target="_blank" rel="noopener">this blog</a><br>and <a href="https://www.cse.buffalo.edu/~demirbas/publications/DistMLplat.pdf" target="_blank" rel="noopener">this paper</a>.</p>
+<a id="more"></a>
+<p>We categorize the distributed ML platforms under 3 basic design approaches:</p>
+<ol>
+<li>basic dataflow</li>
+<li>parameter-server model</li>
+<li>advanced dataflow.</li>
+</ol>
+<p>We talk about each approach in brief:</p>
+<ul>
+<li>using Apache Spark as an example of the basic dataflow approach</li>
+<li>PMLS (Petuum) as an example of the parameter-server model</li>
+<li>TensorFlow and MXNet as examples of the advanced dataflow model.</li>
+</ul>
+<h1 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h1><p>Spark enables in-memory caching of frequently used data and avoids the overhead of writing a lot of intermediate data to disk. For this Spark leverages on Resilient Distributed Datasets (RDD), read-only, partitioned collection of records distributed across a set of machines.<br>RDDs are collection of objects divided in logical partitions that are stored and processed as in-memory, with shuffle/overflow to disk.</p>
+<p>In Spark, a computation is modeled as a directed acyclic graph (DAG), where each vertex denotes a RDD and each edge denotes an operation on RDD.<br>On a DAG, an edge E from vertex A to vertex B implies that RDD B is a result of performing operation E on RDD A. There are two kinds of operations: transformations and actions. A transformation (e.g., map, filter, join) performs an operation on a RDD and produces a new RDD.</p>
+<p>A typical Spark job performs a couple of transformations on a sequence of RDDs and then<br>applies an action to the latest RDD in the lineage of the whole computation. A Spark application runs multiple jobs in sequence or in parallel.</p>
+<p><img src="https://4.bp.blogspot.com/-cN_-PWvDGCs/WX6pgpqlTSI/AAAAAAAAGbw/vp4ttIiQ5jAGmjllTEyMrFq200uDWyalQCK4BGAYYCw/s400/sparkArch.png" alt=""></p>
+<p>A Spark cluster comprises of a master and multiple worker. A master is responsible for negotiating resource requests made by the Spark driver program corresponding to the submitted Spark application. Worker processes hold Spark executors (each of which is a JVM instance) that are responsible for executing Spark tasks. The driver contains two scheduler components, the DAG scheduler and the task scheduler. The DAG scheduler is responsible for stage-oriented scheduling, and the task scheduler is responsible for submitting tasks produced by the DAG scheduler to the Spark executors.</p>
+<p>The Spark user models the computation as a DAG which transforms &amp; runs actions on RDDs. The DAG is compiled into stages. Unlike the MapReduce framework that consists of only two computational stages, map and reduce, a Spark job may consist of a DAG of multiple stages. The stages are run in topological order. A stage contains a set of independent tasks which perform computation on partitions of RDDs. These tasks can be executed either in parallel or as pipelined.</p>
+<p><img src="https://4.bp.blogspot.com/-_KxjkVBsznQ/WX6pcFQ7C5I/AAAAAAAAGbo/GYdLBgVqY78ZEllZ971WoHmBAbnDRayAgCK4BGAYYCw/s400/apache.png" alt=""></p>
+<p>Spark defines two types of dependency relation that can capture data dependency among a set of RDDs:</p>
+<ul>
+<li>Narrow dependency. Narrow dependency means each partition of the parent RDD is used by at most one partition of the child RDD.</li>
+<li>Shuffle dependency (wide dependency). Wide dependency means multiple child partitions of RDD may depend on a single parent RDD partition.</li>
+</ul>
+<p>Narrow dependencies are good for efficient execution, whereas wide dependencies introduce bottlenecks since they disrupt pipelining and require communication intensive shuffle operations.</p>
+<h2 id="Fault-tolerance"><a href="#Fault-tolerance" class="headerlink" title="Fault tolerance"></a>Fault tolerance</h2><p>Spark uses the DAG to track the lineage of operations on RDDs. For shuffle dependency, the intermediate records from one stage are materialized on the machines holding parent partitions. This intermediate data is used for simplifying failure recovery. If a task fails, the task will be retried as long as its stage’s parents are still<br>accessible. If some stages that are required are no longer available, the missing partitions will be re-computed in parallel.</p>
+<p>Spark is unable to tolerate a scheduler failure of the driver, but this can be addressed by replicating the metadata of the scheduler. The task scheduler monitors the state of running tasks and retries failed tasks. Sometimes, a slow straggler task may drag the progress of a Spark job.</p>
+<h2 id="Machine-learning-on-Spark"><a href="#Machine-learning-on-Spark" class="headerlink" title="Machine learning on Spark"></a>Machine learning on Spark</h2><p>Spark was designed for general data processing, and not specifically for machine learning. However, using the MLlib for Spark, it is possible to do ML on Spark. In the basic setup, Spark stores the model parameters in the driver node, and the workers communicate with the driver to update the parameters after each iteration. For large scale deployments, the model parameters may not fit into the driver and would be maintained as an RDD. This introduces a lot of <strong>overhead</strong> because a new RDD will need to be created in each iteration to hold the updated model parameters. Updating the model involves shuffling data across machines/disks, this limits the scalability of Spark. This is where the basic dataflow model (the DAG) in Spark falls short. Spark does not support iterations needed in ML well.</p>
+<h1 id="PMLS"><a href="#PMLS" class="headerlink" title="PMLS"></a>PMLS</h1><p>PMLS was designed specifically for ML with a clean slate. It introduced the parameter-server (PS) abstraction for serving the iteration-intensive ML training process.</p>
+<p>In PMLS, a worker process/thread is responsible for requesting up to date model parameters and carrying out computation over a partition of data, and a parameter-server thread is responsible for storing and updating<br>model parameters and making response to the request from workers.</p>
+<p>Figure below shows the architecture of PMLS.</p>
+<p><img src="https://3.bp.blogspot.com/-cFL80lqWCCo/WX6pk2jzcdI/AAAAAAAAGb4/XFYSzGWsD6UPhrewWEll5w61g-vbYAYYwCK4BGAYYCw/s400/pmlsArch.png" alt=""></p>
+<ul>
+<li>The parameter server is implemented as distributed tables. All model parameters are stored via these tables. A PMLS application can register more than one table. These tables are maintained by server threads. Each table consists of multiple rows. Each cell in a row is identified by a column ID and typically stores one parameter. The rows of the tables can be stored across multiple servers on different machines.</li>
+<li>Workers are responsible for performing computation defined by a user on partitioned dataset in each iteration and need to request up to date parameters for its computation. Each worker may contain multiple working threads. There is no communication across workers. Instead, workers only communicate with servers.</li>
+<li>‘’worker’’ and ‘’server’’ are not necessarily separated physically. In fact server threads co-locate with the worker processes/threads in PMLS.</li>
+</ul>
+<h2 id="Error-tolerance-of-ML-algorithm"><a href="#Error-tolerance-of-ML-algorithm" class="headerlink" title="Error tolerance of ML algorithm."></a>Error tolerance of ML algorithm.</h2><p>PMLS exploits the error-tolerant property of many machine learning algorithms to make a trade-off between efficiency and consistency.</p>
+<p>In order to leverage such error-tolerant property, PMLS follows Staleness Synchronous Parallel (SSP) model.  In SSP model, worker threads can proceed without waiting for slow threads.</p>
+<blockquote>
+<p> Fast threads may carry out computation using stale model parameters.  Performing computation on stale version of model parameter does cause errors, however these errors are bounded.</p>
+</blockquote>
+<p>The communication protocol between workers and servers can guarantee that the model parameters that a working thread reads from its local cache is of bounded staleness.</p>
+<h2 id="Fault-tolerance-1"><a href="#Fault-tolerance-1" class="headerlink" title="Fault tolerance"></a>Fault tolerance</h2><p>Fault tolerance in PMLS is achieved by checkpointing the model parameters in the parameter server periodically. To resume from a failure, the whole system restarts from the last checkpoint.</p>
+<h2 id="Programing-interface"><a href="#Programing-interface" class="headerlink" title="Programing interface"></a>Programing interface</h2><p>PMLS is written in C++.</p>
+<p>While PMLS has very little overhead, on the negative side, the users of PMLS need to know how to handle computation using relatively low-level APIs.</p>
+<h1 id="TensorFlow"><a href="#TensorFlow" class="headerlink" title="TensorFlow"></a>TensorFlow</h1><p>Tensorflow is the first generation distributed parameter-server system.<br>In TensorFlow the computation is abstracted and represented by a directed graph. But unlike traditional dataflow systems, TensorFlow allows nodes to represent computations that own or update mutable state.</p>
+<ul>
+<li>Variable: a stateful operations, owns mutable buffer, and can be used to store model parameters that need to be updated at each iteration.</li>
+<li>Node: represents operations, and some operations are control flow operations.</li>
+<li>Tensors: values that flow along the directed edges in the TensorFlow graph, with arbitrary dimensionality matrices.<ul>
+<li>An operation can take in one or more tensors and produce a result tensor.</li>
+</ul>
+</li>
+<li>Edge: special edges called control dependencies can be added into TensorFlow’s dataflow graph with no data flowing along such edges.</li>
+</ul>
+<p>In summary, TensorFlow is a dataflow system that offers mutable state and allows cyclic computation graph, and as such enables training a machine learning algorithm with parameter-server model.</p>
+<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><p>The Tensorflow runtime consists of three main components: client, master, worker.</p>
+<ul>
+<li>client:  is responsible for holding a session where a user can define computational graph to run. When a client requests the evaluation of a Tensorflow graph via a session object, the request is sent to master service.</li>
+<li>master: schedules the job over one or more workers and coordinates the execution of the computational graph.</li>
+<li>worker:  Each worker handles requests from the master and schedules the execution of the kernels (The implementation of an operation on a particular device is called a kernel) in the computational graph. The dataflow executor in a worker dispatches the kernels to local devices and runs the kernels in parallel when possible.</li>
+</ul>
+<h2 id="Characteristics"><a href="#Characteristics" class="headerlink" title="Characteristics"></a>Characteristics</h2><h3 id="Node-Placement"><a href="#Node-Placement" class="headerlink" title="Node Placement"></a>Node Placement</h3><p>If multiple devices are involved in computation, a procedure called node placement is executed in a Tensorflow<br>runtime. Tensorflow uses a cost model to estimate the cost of executing an operation on all available devices (such as CPUs and GPUs) and assigns an operation to a suitable device to execute, subject to implicit or explicit device constraints in the graph.</p>
+<h3 id="Sub-graph-execution"><a href="#Sub-graph-execution" class="headerlink" title="Sub-graph execution"></a>Sub-graph execution</h3><p>TensorFlow supports sub-graph execution. A single round of executing a graph/sub-graph is called a step.</p>
+<p>A training application contains two type of jobs: parameter server (ps) job and worker job. Like data parallelism in PMLS, TensorFlow’s data parallelism training involves multiple tasks in a worker job training the same model on different minibatches of data, updating shared parameters hosted in a one or more tasks in a ps job.</p>
+<h3 id="A-typical-replicated-training-structure-between-graph-replication"><a href="#A-typical-replicated-training-structure-between-graph-replication" class="headerlink" title="A typical replicated training structure: between-graph replication"></a>A typical replicated training structure: between-graph replication</h3><p><img src="https://1.bp.blogspot.com/-LToYY4Kj2YE/WX6pod_r5pI/AAAAAAAAGcA/Ls-ZWfTebYk_sc3l2pCHRAWv9e6U_eT_gCK4BGAYYCw/s400/tf.png" alt=""></p>
+<p>There is a separate client for each worker task, typically in the same process as the worker task. Each client builds a similar graph containing the parameters (pinned to ps) and a single copy of the compute-intensive part of the computational graph that is pinned to the local task in the worker job.</p>
+<p>For example, a compute-intensive part is to compute gradient during each iteration of stochastic gradient descent algorithm.</p>
+<p>Users can also specify the consistency model in the betweengraph replicated training as either synchronous training or asynchronous training:</p>
+<ul>
+<li>In asynchronous mode, each replica of the graph has an independent training loop that executes without coordination.</li>
+<li>In synchronous mode, all of the replicas read the same values for the current parameters, compute gradients in parallel, and then apply them to a stateful accumulators which act as barriers for updating variables.</li>
+</ul>
+<h2 id="Fault-tolerance-2"><a href="#Fault-tolerance-2" class="headerlink" title="Fault tolerance"></a>Fault tolerance</h2><p>TensorFlow provides user-controllable checkpointing for fault tolerance via primitive operations: <em>save</em> writes tensors to checkpoint file, and <em>restore</em> reads tensors from a checkpointing file.<br>TensorFlow allows customized fault tolerance mechanism through its primitive operations, which provides users the ability to make a balance between reliability and checkpointing overhead.</p>
+<h1 id="MXNET"><a href="#MXNET" class="headerlink" title="MXNET"></a>MXNET</h1><p>Similar to TensorFlow, MXNet is a dataflow system that allows cyclic computation graphs with mutable states, and supports training with parameter server model. Similar to TensorFlow, MXNet provides good support for data-parallelism on multiple CPU/GPU, and also allows model-parallelism to be implemented.<br>MXNet allows both synchronous and asynchronous training.</p>
+<h2 id="Characteristics-1"><a href="#Characteristics-1" class="headerlink" title="Characteristics"></a>Characteristics</h2><p>Figure below illustrates main components of MXNet. The runtime dependency engine analyzes the dependencies in computation processes and parallelizes the computations that are not dependent. On top of runtime dependency engine, MXNet has a middle layer for graph and memory optimization.</p>
+<p><img src="https://raw.githubusercontent.com/dmlc/dmlc.github.io/master/img/mxnet/system/overview.png" alt=""></p>
+<h2 id="Fault-tolerance-3"><a href="#Fault-tolerance-3" class="headerlink" title="Fault tolerance"></a>Fault tolerance</h2><p>MXNet supports basic fault tolerance through checkpointing, and provides save and load model operations. The save operaton writes the model parameters to the checkpoint file and the load operation reads model parameters from the checkpoint file.</p>
+<h1 id="Evaluations"><a href="#Evaluations" class="headerlink" title="Evaluations"></a>Evaluations</h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Distributed-System/" rel="tag"># Distributed System</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/03/unix-introduce-unix/" rel="next" title="An Introduction to the Linux Terminal">
+                <i class="fa fa-chevron-left"></i> An Introduction to the Linux Terminal
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/13/compare-gradient-descent-algorithm/" rel="prev" title="A overview of gradient descent optimization algorithms">
+                A overview of gradient descent optimization algorithms <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="虫二" />
+          <p class="site-author-name" itemprop="name">虫二</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/iamtao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/iamtaol" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark"><span class="nav-number">1.</span> <span class="nav-text">Spark</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fault-tolerance"><span class="nav-number">1.1.</span> <span class="nav-text">Fault tolerance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Machine-learning-on-Spark"><span class="nav-number">1.2.</span> <span class="nav-text">Machine learning on Spark</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PMLS"><span class="nav-number">2.</span> <span class="nav-text">PMLS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Error-tolerance-of-ML-algorithm"><span class="nav-number">2.1.</span> <span class="nav-text">Error tolerance of ML algorithm.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fault-tolerance-1"><span class="nav-number">2.2.</span> <span class="nav-text">Fault tolerance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Programing-interface"><span class="nav-number">2.3.</span> <span class="nav-text">Programing interface</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TensorFlow"><span class="nav-number">3.</span> <span class="nav-text">TensorFlow</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Architecture"><span class="nav-number">3.1.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Characteristics"><span class="nav-number">3.2.</span> <span class="nav-text">Characteristics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-Placement"><span class="nav-number">3.2.1.</span> <span class="nav-text">Node Placement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sub-graph-execution"><span class="nav-number">3.2.2.</span> <span class="nav-text">Sub-graph execution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-typical-replicated-training-structure-between-graph-replication"><span class="nav-number">3.2.3.</span> <span class="nav-text">A typical replicated training structure: between-graph replication</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fault-tolerance-2"><span class="nav-number">3.3.</span> <span class="nav-text">Fault tolerance</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MXNET"><span class="nav-number">4.</span> <span class="nav-text">MXNET</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Characteristics-1"><span class="nav-number">4.1.</span> <span class="nav-text">Characteristics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fault-tolerance-3"><span class="nav-number">4.2.</span> <span class="nav-text">Fault tolerance</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Evaluations"><span class="nav-number">5.</span> <span class="nav-text">Evaluations</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">虫二</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

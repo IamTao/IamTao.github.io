@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep Learning,Tensorflow," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="From 以静制动的TensorFlow Fold.">
+<meta name="keywords" content="Deep Learning,Tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow, Dynamic Batching">
+<meta property="og:url" content="IamTao.github.io/2017/09/04/tensorflow-dynamic-batching/index.html">
+<meta property="og:site_name" content="庭草交翠">
+<meta property="og:description" content="From 以静制动的TensorFlow Fold.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58a65f8e0893a.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:updated_time" content="2018-09-01T13:04:23.021Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow, Dynamic Batching">
+<meta name="twitter:description" content="From 以静制动的TensorFlow Fold.">
+<meta name="twitter:image" content="https://static.leiphone.com/uploads/new/article/740_740/201702/58a65f8e0893a.png?imageMogr2/format/jpg/quality/90">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="IamTao.github.io/2017/09/04/tensorflow-dynamic-batching/"/>
+
+
+
+
+
+  <title>Tensorflow, Dynamic Batching | 庭草交翠</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">庭草交翠</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="IamTao.github.io/2017/09/04/tensorflow-dynamic-batching/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="虫二">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庭草交翠">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Tensorflow, Dynamic Batching</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-04T07:36:19+02:00">
+                2017-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Science/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Science</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>From <a href="https://www.leiphone.com/news/201702/cb7cPOtzFj1pgRpk.html" target="_blank" rel="noopener">以静制动的TensorFlow Fold</a>.</p>
+<a id="more"></a>
+<p>近期各大框架发展的趋势主要有两个，一个是增加对动态图计算的支持，另一个是在主编程语言上适应广大用户的需求。最近比较火热的动态计算图相关的框架主要有DyNet、PyTorch和TensorFlow Fold，就是围绕着这其中一个点或两个点进行的。</p>
+<h1 id="当我们说动态计算图的时候，我们指的是什么？"><a href="#当我们说动态计算图的时候，我们指的是什么？" class="headerlink" title="当我们说动态计算图的时候，我们指的是什么？"></a>当我们说动态计算图的时候，我们指的是什么？</h1><p>首先，我们要搞清楚深度学习框架所谓的“动态”和“静态”究竟是按照什么标准划分的。</p>
+<h2 id="静态框架"><a href="#静态框架" class="headerlink" title="静态框架"></a>静态框架</h2><p>在静态框架使用的是静态声明（static declaration）策略，计算图的声明和执行是分开的。</p>
+<p>这个整个声明和执行的过程中涉及到两个图，这里我们分别给它们一个名字：</p>
+<ul>
+<li><strong>虚拟计算图</strong>: 声明阶段构建的图<ul>
+<li>在这个过程中框架需要将用户的代码转化为可以一份详细的计算图，这份计算图一般会包含计算执行顺序和内存空间分配的策略，这些策略的制定一般是这个过程最消耗时间的部分。</li>
+</ul>
+</li>
+<li><strong>实体计算图</strong>: 执行阶段构建的图<ul>
+<li>这个过程包括为参数和中间结果实际分配内存空间，并按照当前需求进行计算等，数据就在这张实体计算图中计算和传递。</li>
+</ul>
+</li>
+</ul>
+<p>不过这里要注意一点的是，虚拟计算图中的部件并不需要在每一次执行中都转化为实体计算图。</p>
+<p>常见的静态框架有TensorFlow、MXNet、Theano等。</p>
+<h2 id="动态框架"><a href="#动态框架" class="headerlink" title="动态框架"></a>动态框架</h2><p>动态框架则不同，使用的是<strong>动态声明</strong>（dynamic declaration）策略，声明和执行一起进行的。</p>
+<p>这样虚拟计算图和实体计算图的构建就是同步进行的了。因为可以实时的计划，动态框架可以根据实时需求构建对应的计算图，在灵活性上，动态框架会更胜一筹。Torch、DyNet、Chainer等就是动态框架。</p>
+<h2 id="静态框架-V-S-动态框架"><a href="#静态框架-V-S-动态框架" class="headerlink" title="静态框架 V.S. 动态框架"></a>静态框架 V.S. 动态框架</h2><p>静态框架将声明和执行分开的好处:是在执行前就知道了所有的需要进行操作，所以可以对图中各节点计算顺序和内存分配进行合理的规划，这样就可以就较快的执行所需的计算。</p>
+<p>静态框架的执行效率相对来说就更高一些。这一点是动态框架的劣势，因为它每次规划、分配内存、执行的时候，都只能看到局部的需求，所以并不能做出全局最优的规划和内存分配。</p>
+<p>同样道理，动态框架对虚拟计算图的构建速度有较高的要求。当然因为动态框架每步构建和计算只是虚拟计算图的一个局部，需要策略不会太复杂，所以制定策略也快得多。</p>
+<h2 id="其他及引言"><a href="#其他及引言" class="headerlink" title="其他及引言"></a>其他及引言</h2><p>在过去的大部分的深度学习项目中，不管使用的是静态框架还是动态框架，我们实际上都只用到了构建静态实际计算图的能力。</p>
+<p>在一般在将数据投入模型进行训练或预测之前，往往会有一个预处理的步奏。在预处理的时候，我们会将图片缩放裁剪，将句子拼接截断，使他们变为同样的形状大小，然后将集成一个个批次（min-batch），等待批次训练或预测。这些不同的输入到模型中其实运行的是同一个计算图。</p>
+<p>这样作的好处是可以充分利用GPU和多核CPU的并行计算能力。</p>
+<blockquote>
+<p>建筑施工队里面有很多的砌墙工人，100个人取砌一堵1米的墙并不会比10个人快上10倍（能实际工作的可能还是只有10个人），而让他们同时砌十堵1米的墙，可能所花的时间可能和砌一堵墙几乎一样快。如果有很多可以通过这样并行来加速的工作，那整个工程所需要的时间也就可以大大缩短。GPU能够几十倍上百倍地提高计算速度是现代深度学习发展的一个关键。</p>
+</blockquote>
+<p>然而，并不是所有项目的数据都可以预处理成相同的形状和尺寸。例如自然语言处理中的语法解析树，源代码中的抽象语法树，以及网页中的DOM树等，形状的不同本身就是非常重要的特征，不可剥离。</p>
+<p>这样一来，对于每一个样例，我们都需要一个新的计算图，这种问题我们需要使用构建动态计算图的能力才能够解决。这种问题我们可以叫它<strong>多结构输入</strong>问题，因为这个问题中计算图的动态需求是输入带来的。</p>
+<p>不同框架这个问题的求解能力可以分为三个程度:</p>
+<ul>
+<li>第一层，无法计算，对于所有样本都要求同样的结构，在TensorFlow Fold出来之前所有正常使用的静态框架处于这个层次。</li>
+<li>第二层，能计算但不够高效，不同批次的样本之间可以有不同的结构，但同一个批次样本都是同一个结构，因为无法利用GPU和多核CPU的并行计算能力，不能高效计算，目前所有的动态框架属于这个层次。</li>
+<li>第三层，能高效计算，能够在同一个批次里包含不同结构的样本，这个层次的多结构输入问题有些论坛上也叫Dynamic Batching问题， TensorFlow Fold的核心算法Dynamic Batching算法刚好同名，TensorFlow Fold和以后实现Dynamic Batching算法的框架处于这个层次。</li>
+</ul>
+<p>多结构输入问题早已存在，可用的模型诸如递归神经网络（Recursive Neural Networks）也提出许久，但因为没有办法高效实现，研究和使用者寥寥无几。因此，当我们说各大框架的动态计算图的时候，我们关心的不仅仅是他们谁更容易做到，更重要的是能不能高效地做到。动态计算图问题之一的多结构输入问题的高效计算问题一旦解决，就会大大促进树状网络甚至更复杂模型和数据集的发展。</p>
+<p>但值得注意的是：多结构输入问题并不是唯一的动态图计算问题，这里给大家举另外一个例子，即计算图的结构要依赖于自身的计算结果的情况。</p>
+<h1 id="框架竞争的焦点：编程语言与动态计算图"><a href="#框架竞争的焦点：编程语言与动态计算图" class="headerlink" title="框架竞争的焦点：编程语言与动态计算图"></a>框架竞争的焦点：编程语言与动态计算图</h1><p>在动态计算图争锋下面，还隐含着另外一重较量，编程语言的支持。<br>当前深度学习界最受欢迎的语言莫过于Python了，此外C++也因为其本身的高效在工业界颇得青睐。<br>现在大多主流框架都支持这两种语言，他们是就像机器学习界的中英文。不过Torch是一个例外，它使用的是比较小众的Lua。</p>
+<blockquote>
+<p>这实际上是Lua最大一块短板，因为使用Lua做一些数据处理并不方便，使用者经常要使用Python之类的语言进行数据清洗等操作，然后在转化为Lua可以读取的形式。这一点使得无数使用者在不同语言的切换中纷纷投向TensorFlow、MXNet的怀抱。即使去年年中Facebook推出TorchNet这个Torch升级版也没有挽回太多的人气，因为TorchNet用的也是Lua。</p>
+</blockquote>
+<p>在DyNet出现前，Python和C++上还没有一个比较高效的动态计算框架（如Chainer效率并不高）。<br>DyNet通过对动态声明的图构建流程的优化，大大提高了构建虚拟计算图的速度。该框架在LSTM和BiLSTM等部分测试中超过了Chainer、Theano和TensorFlow，并且在当时Theano和TensorFlow难以实现的树状模型TreeLSTM的测试中也远远打败了Chainer，所以DyNet一出来吸引住了不少使用者。</p>
+<blockquote>
+<p>然而好景不长，Torch不愧是有Facebook支持的公司，很快就推出了据说内部使用已久的PyTorch，将Torch移植到了Python，补足了自己最后一块短板。这下子就厉害了，不仅挽留住了人气，借助Python的力量甚至有机会从TensorFlow这位老大手里夺下一块蛋糕。</p>
+</blockquote>
+<p>但是不管是DyNet还是PyTorch，没有解决多结构输入问题的高效计算。它们虽然对不同的批次（mini-batch）可以给出不同的计算图。但同一个批次内部的样本的形状还是要求一致，并没有一个成熟的解决方案来应对这种情况。</p>
+<h1 id="以静制动：巧妙的Dynamic-Batching算法"><a href="#以静制动：巧妙的Dynamic-Batching算法" class="headerlink" title="以静制动：巧妙的Dynamic Batching算法"></a>以静制动：巧妙的Dynamic Batching算法</h1><h2 id="通用子图的组成"><a href="#通用子图的组成" class="headerlink" title="通用子图的组成"></a>通用子图的组成</h2><p>TensorFlow Fold解决问题的核心技术叫Dynamic Batching，这个技术能够构建一个能够模拟任意形状和大小的动态计算图的静态图，原本不同样本的动态计算图都会被重写成能够被这个计算图高效计算的形式。这样就巧妙地解决了动态计算图的高效计算问题。</p>
+<blockquote>
+<p>打比喻就是，建筑公司请了一位计算机科学家写了一个自动化办公软件，每当房地产商提出一个个性社区问题的时候，这个软件就会把一张通用的设计图告诉设计师去设计；然后对于每一批楼的需求这个软件都会生成对应的施工指南，只要按照这个指南的指示，施工就可以通过多次建造通用设计图中的一部分来完成这批楼的建造；在施工指南中软件已经合并每次建造时重复的工作，这样施工队可以并行施工，高效地完成工程。</p>
+</blockquote>
+<p>那为什么用静态计算图模拟动态计算图是可能的？因为虽然动态计算图的形状和大小千变万化，但对于一个模型来说它们的基本组件却可以简单划分为两种：Tensor（张量）和Operation（操作）。</p>
+<ul>
+<li><strong>Tensor</strong>，可以看做各种各样的数据块，主要包括输入的样本和计算结果，Tensor的类型可以按照shape（形状）和data type（数据类型）划分，具有相同shape和data type的Tensor可以被划分为一类，就像相同大小和材质的砖头；这里的shape并不包括batch size，它就像砖头的个数，一叠不管是十块还是五块，只要砖头的大小材质一样，我们认为是同一个类。</li>
+<li><strong>Operation</strong>，并不是是指加减乘除这样最底层的操作，而是指一块小的计算子图，一块计算子图接受某种确定类型的Tensor作为输入，并输出某种确定类型的Tensor。这块计算子图在动态构建图的过程中并不会被拆开，而是作为一个整体被适用，比如RNN的Cell或其他用户自己定义的一些固定的操作组合。</li>
+</ul>
+<p>对于某一个模型如树状RNN来说，但它只会有限种Operation和Tensor类型，当我们将这些Operation和Tensor类型放到一起，我们就有了一个通用子图，这时候只需要一些控制部件控制这个每次子图执行的部分（上文有提到每次执行的实体计算图可以只是虚拟计算图的一部分）以及组合方式，我们就可以模拟对应模型所有可能的计算图。达成这种控制只需TensorFlow的三个部件：<code>tf.gather</code>、<code>tf.concat</code>和<code>tf.while_loop</code>。</p>
+<h2 id="Dynamic-Batching如何将不同结构的计算图重写成可以用通用子图计算的形式"><a href="#Dynamic-Batching如何将不同结构的计算图重写成可以用通用子图计算的形式" class="headerlink" title="Dynamic Batching如何将不同结构的计算图重写成可以用通用子图计算的形式"></a>Dynamic Batching如何将不同结构的计算图重写成可以用通用子图计算的形式</h2><p>Dynamic Batching是一个贪婪（greedy）的算法，它接受一个有向无环计算图作为输入:</p>
+<ol>
+<li>给图中的每一个节点（操作）标注一个深度，所有没有任何依赖的节点标注为深度0，依赖的节点深度最大为d的节点的深度标注为d+1;</li>
+<li>在图中插入pass-through（直通）的操作，使得第d+1层只依赖于第d层;</li>
+<li>将同一深度涉及相同操作的节点合并到一起，方便并行计算;</li>
+<li>将同一深度的计算结果按Tensor类型（包括Tensor的形状和数值类型）有序拼接在一起;</li>
+<li>将输入原始计算图中的每条边标记上（深度，数据类型，序号），对应它们可以获取上一层计算结果的位置。</li>
+</ol>
+<p>对于一批不同结构的计算图，我们可以把它们看做不连通的大图同样处理。<br>算法在每次迭代中执行一个深度的计算，使用<code>tf.while_loop</code>从深度0一直执行到最大深度。在每一个深度中，<code>tf.gather</code>根据上面第五步的标记为各个Operation获取当前深度各条输入边的Tensor，如果某个Operation没有获取到任何Tensor，说明当前深度这个Operation不需要执行计算。Operation执行完后<code>tf.concat</code>将相同Tensor类型的计算结果拼接在一起，提供给下一个深度的计算。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201702/58a65f8e0893a.png?imageMogr2/format/jpg/quality/90" alt=""></p>
+<blockquote>
+<p>在上图中，左边是Dynamic Batching为二叉TreeRNN构建的通用计算图。右边是一颗简单的语法解析树。通用计算图中有两种Tensor，代表单词的编码整数、词向量/hidden向量的128维向量。Operation也只有两个一个词向量查表操作（embed lookup）和一个RNN的Cell。图中gather和concat之间的直连表示直通（pass-through）操作。右边的语法解析树可以分为三层计算被执行：第一层，将1、3、5通过词向量查表操作，输出3个128维的词向量；第二层，1和3对应的词向量通过RNN Cell输出一个128维的隐含层向量，5对应的词向量直通输出；第三层，上一层计算的隐含层向量和5对应的词向量通过RNN Cell，输出一个128维的隐含层向量。计算完毕。<br>(那这个算法的效果怎么样呢？它在TreeLSTM的实验中，8核英特尔CPU的可以加速20多倍，而英伟达GTX-1080上可以加速100倍左右。这个加速比是采用Dynamic Batching算法批处理中平均每个样本执行的平均时间和单个样本不作批处理的执行时间之比。这里不包含构建虚拟图所需要的时间。)</p>
+</blockquote>
+<h1 id="TensorFlow-Fold：封装在静态框架上的动态接口"><a href="#TensorFlow-Fold：封装在静态框架上的动态接口" class="headerlink" title="TensorFlow Fold：封装在静态框架上的动态接口"></a>TensorFlow Fold：封装在静态框架上的动态接口</h1><p>新推出的TensorFlow Fold就是一个TensorFlow的封装，设计参考了函数式编程的一些思想，目的就是方便用户快速地构建动态计算图。</p>
+<p>TensorFlow Fold提供了一些函数专门用来处理序列(x_1,…,x_n):</p>
+<ul>
+<li><code>Map(f)</code>: 计算[f(x_1) ,…,f(x_n)]将函数f应用到每一个序列的元素，比如将句子中的每一个词转化为词向量;</li>
+<li><code>Fold(g, z)</code>: 计算g(…,g(z, x_1), x_2), …,x_n)，比如说展开一个RNN（循环神经网络）</li>
+<li><code>Reduce(g)</code>: 计算g(Reduce(g)[x_1 ,…,x_{n/2}],Reduce(g)[x_{n/2} ,…,x_n]，将函数g应用到一颗平衡二叉树上，比如对序列中的元素作max或sum-pooling。</li>
+</ul>
+<p>由于TensorFlow原本的基本单元Tensor不适合用于构建动态图，所以Fold引入新的基本组件Block。Block有明确的一个输入类型和一个输出类型，包括：</p>
+<ol>
+<li><code>Input</code>: 来着编程语言如Python中元素，比如字典等;</li>
+<li><code>Tensor</code>: 拥有数据类型和形状的TensorFlow基本模块;</li>
+<li><code>Tuple(t_1 ,...,t_n)</code>: 括号中的每一个t表示对应位置的类型;</li>
+<li><code>Sequence(t)</code>: 一个不定长的拥有类型为t的元素的序列;</li>
+<li><code>Void</code>: 单元类型。这些基本类型可以相互嵌套，比如一个Block的输入类型可以是Input类型的Tuple。</li>
+</ol>
+<p>用来<em>创建</em>Block的基本函数有：</p>
+<ol>
+<li><code>Scalar</code>: 将Python标量转化为Tensor;</li>
+<li><code>Tensor</code>: 将Numpy数组转化为Tensor;</li>
+<li><code>Function(h)</code>: 创建一个Operation;</li>
+<li><code>InputTransform(h)</code>: 用于预处理Python类型。</li>
+</ol>
+<p>用来<em>组合</em>Block的基本函数有:</p>
+<ol>
+<li><code>b1 &gt;&gt; b2</code>，流水线（pipeline): 将b1 的输出作为b2 的输入;</li>
+<li><code>Record({l_1:b_1,..., l_n:b_n})</code>: 接受一个Python字典为输入，对字典中key值为l_i的value应用;</li>
+<li><code>OneOf (b_1,...,b_n)</code>: 根据输入条件应用b_1,…,b_n中的一个;</li>
+<li><code>Optional(b)</code>: OneOf的特例，如果输入不为None，应用b;</li>
+<li><code>AllOf(b_1,...,b_n)</code>: 输入应用中的每一个。</li>
+</ol>
+<p>用来<em>组合</em>Block的高级函数有：</p>
+<ol>
+<li><code>Composition()</code>: 流水线的升级版，流水线只能处理串行的流程，Composition()创建一个Scope对象，在这个Scope的缩进范围内，采用b.reads(b_1,…,b_n)来读取多个数据流，可以用于构建多分支结构;</li>
+<li><code>ForwardDeclaration()</code>: 用来创建递归结构，这个函数可以先定义一个预先占位的表达式expr，等这个表达式定义完再用<code>expr.resolve_to(expr_def)</code>，将表达式递归地代入，这是用来创建树结构计算图必不可少的工具。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+            <a href="/tags/Tensorflow/" rel="tag"># Tensorflow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/17/difference-between-divide-and-conquer-dynamic-programming-greedy-algorithm/" rel="next" title="Difference between divide and conquer, dynamic programming and greedy algorithm">
+                <i class="fa fa-chevron-left"></i> Difference between divide and conquer, dynamic programming and greedy algorithm
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/11/interview-deep-learning/" rel="prev" title="Deep Learning Interview Questions">
+                Deep Learning Interview Questions <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="虫二" />
+          <p class="site-author-name" itemprop="name">虫二</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/iamtao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/iamtaol" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#当我们说动态计算图的时候，我们指的是什么？"><span class="nav-number">1.</span> <span class="nav-text">当我们说动态计算图的时候，我们指的是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#静态框架"><span class="nav-number">1.1.</span> <span class="nav-text">静态框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态框架"><span class="nav-number">1.2.</span> <span class="nav-text">动态框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态框架-V-S-动态框架"><span class="nav-number">1.3.</span> <span class="nav-text">静态框架 V.S. 动态框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他及引言"><span class="nav-number">1.4.</span> <span class="nav-text">其他及引言</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#框架竞争的焦点：编程语言与动态计算图"><span class="nav-number">2.</span> <span class="nav-text">框架竞争的焦点：编程语言与动态计算图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#以静制动：巧妙的Dynamic-Batching算法"><span class="nav-number">3.</span> <span class="nav-text">以静制动：巧妙的Dynamic Batching算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通用子图的组成"><span class="nav-number">3.1.</span> <span class="nav-text">通用子图的组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dynamic-Batching如何将不同结构的计算图重写成可以用通用子图计算的形式"><span class="nav-number">3.2.</span> <span class="nav-text">Dynamic Batching如何将不同结构的计算图重写成可以用通用子图计算的形式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TensorFlow-Fold：封装在静态框架上的动态接口"><span class="nav-number">4.</span> <span class="nav-text">TensorFlow Fold：封装在静态框架上的动态接口</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">虫二</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

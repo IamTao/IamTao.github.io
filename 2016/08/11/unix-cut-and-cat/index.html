@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Unix," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content=".">
+<meta name="keywords" content="Unix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cut and cat">
+<meta property="og:url" content="IamTao.github.io/2016/08/11/unix-cut-and-cat/index.html">
+<meta property="og:site_name" content="庭草交翠">
+<meta property="og:description" content=".">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-09-01T13:04:23.024Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cut and cat">
+<meta name="twitter:description" content=".">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="IamTao.github.io/2016/08/11/unix-cut-and-cat/"/>
+
+
+
+
+
+  <title>cut and cat | 庭草交翠</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">庭草交翠</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="IamTao.github.io/2016/08/11/unix-cut-and-cat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="虫二">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庭草交翠">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">cut and cat</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-11T15:23:58+02:00">
+                2016-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Wiki/" itemprop="url" rel="index">
+                    <span itemprop="name">Wiki</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>.</p>
+<a id="more"></a>
+<h1 id="cut"><a href="#cut" class="headerlink" title="cut"></a><code>cut</code></h1><h2 id="Select-Column-of-Characters"><a href="#Select-Column-of-Characters" class="headerlink" title="Select Column of Characters"></a>Select Column of Characters</h2><h3 id="Select-Specific-Column-of-Characters"><a href="#Select-Specific-Column-of-Characters" class="headerlink" title="Select Specific Column of Characters"></a>Select Specific Column of Characters</h3><p>To extract only a desired column from a file use <code>-c</code> option.</p>
+<p>The example displays 2nd character from each line:<br><code>$ cut -c2 test.txt</code>.</p>
+<h3 id="Select-Column-of-Characters-using-Range"><a href="#Select-Column-of-Characters-using-Range" class="headerlink" title="Select Column of Characters using Range"></a>Select Column of Characters using Range</h3><p>Range of characters can also be extracted from a file by specifying start and end position delimited with <code>-</code>.</p>
+<p>The example extracts first 3 characters of each line:<br><code>cut -c1-3 test.txt</code>.</p>
+<h3 id="Select-Column-of-Characters-using-either-Start-or-End-Position"><a href="#Select-Column-of-Characters-using-either-Start-or-End-Position" class="headerlink" title="Select Column of Characters using either Start or End Position"></a>Select Column of Characters using either Start or End Position</h3><p>Either start position or end position can be passed to cut command with <code>-c</code> option.</p>
+<p>The example extracts from 3rd character to end of each line:<br><code>cut -c3- test.txt</code>.</p>
+<p>The entire line would get printed when you don’t specify a number before or after the <code>-</code>: <code>cut -c- test.txt</code>.</p>
+<h2 id="Select-Field"><a href="#Select-Field" class="headerlink" title="Select Field"></a>Select Field</h2><h3 id="Select-a-Specific-Field-from-a-File"><a href="#Select-a-Specific-Field-from-a-File" class="headerlink" title="Select a Specific Field from a File"></a>Select a Specific Field from a File</h3><p>If you like to extract a whole field, you can combine option <code>-f</code> and <code>-d</code>.<br>The <code>-f</code> specifies which field you want to extract,<br>and <code>-d</code> specifies what is the field delimiter that is used in the input file.</p>
+<p>The example displays only first field of each lines from <code>/etc/passwd</code> file using the field delimiter<code>:</code>.</p>
+<h3 id="Select-Multiple-Fields-from-a-File"><a href="#Select-Multiple-Fields-from-a-File" class="headerlink" title="Select Multiple Fields from a File"></a>Select Multiple Fields from a File</h3><p>Below example displays username and home directory of users who has the login shell as <code>/bin/bash</code>: <code>grep &quot;/bin/bash&quot; /etc/passwd | cut -d&#39;:&#39; -f1,6</code>.</p>
+<p>To display the range of fields specify start field and end field as shown below:<br><code>grep &quot;/bin/bash&quot; /etc/passwd | cut -d&#39;:&#39; -f1-4,6,7</code></p>
+<h3 id="Select-Fields-Only-When-a-Line-Contains-the-Delimiter"><a href="#Select-Fields-Only-When-a-Line-Contains-the-Delimiter" class="headerlink" title="Select Fields Only When a Line Contains the Delimiter"></a>Select Fields Only When a Line Contains the Delimiter</h3><p>The following example specify the delimiter as <code>|</code>, and cut command simply displays the whole line, even when it doesn’t find any line that has <code>|</code> as delimiter: <code>grep &quot;/bin/bash&quot; /etc/passwd | cut -d&#39;|&#39;  -f1</code>.</p>
+<p>It is possible to filter and display only the lines that contains the specified delimiter using <code>-s</code> option: <code>grep &quot;/bin/bash&quot; /etc/passwd | cut -d&#39;|&#39; -s -f1</code>.</p>
+<h3 id="Select-All-Fields-Except-the-Specified-Fields"><a href="#Select-All-Fields-Except-the-Specified-Fields" class="headerlink" title="Select All Fields Except the Specified Fields"></a>Select All Fields Except the Specified Fields</h3><p>In order to complement the selection field list use option <code>--complement</code>.</p>
+<p>The following example displays all the fields from /etc/passwd file except field 7: <code>grep &quot;/bin/bash&quot; /etc/passwd | cut -d&#39;:&#39; --complement -s -f7</code>.</p>
+<h3 id="Change-Output-Delimiter-for-Display"><a href="#Change-Output-Delimiter-for-Display" class="headerlink" title="Change Output Delimiter for Display"></a>Change Output Delimiter for Display</h3><p>To change the output delimiter use the option <code>--output-delimiter</code> as shown below: <code>grep &quot;/bin/bash&quot; /etc/passwd | cut -d&#39;:&#39;  -s -f1,6,7 --output-delimiter=&#39;#&#39;</code></p>
+<h3 id="Change-Output-Delimiter-to-Newline"><a href="#Change-Output-Delimiter-to-Newline" class="headerlink" title="Change Output Delimiter to Newline"></a>Change Output Delimiter to Newline</h3><p>Each and every field of the cut command output is displayed in a separate line: <code>grep bala /etc/passwd | cut -d&#39;:&#39; -f1,6,7 --output-delimiter=$&#39;\n&#39;</code></p>
+<h1 id="cat"><a href="#cat" class="headerlink" title="cat"></a><code>cat</code></h1><h3 id="Display-the-contents-of-a-file"><a href="#Display-the-contents-of-a-file" class="headerlink" title="Display the contents of a file"></a>Display the contents of a file</h3><p>It can display one or more than one files’ contents: <code>cat file1 file2</code></p>
+<h3 id="Create-a-New-File"><a href="#Create-a-New-File" class="headerlink" title="Create a New File"></a>Create a New File</h3><p>Using cat command, the lines received from stdin can be redirected to a new file using redirection symbols.</p>
+<p>When you type simply cat command without any arguments, it just receives the <code>stdin</code> content and displays it in the <code>stdout</code>.</p>
+<p>You can also redirect the stdout to a new file as shown below:<br>TODO</p>
+<h3 id="Copy-File-Content"><a href="#Copy-File-Content" class="headerlink" title="Copy File Content"></a>Copy File Content</h3><p>Redirection symbols in unix plays an important role in processing the standard file descriptor contents.</p>
+<p>The example below copy the contents of one file into another: <code>cat test1&gt;test2</code></p>
+<h3 id="Concatenate-Contents-of-Multiple-Files"><a href="#Concatenate-Contents-of-Multiple-Files" class="headerlink" title="Concatenate Contents of Multiple Files"></a>Concatenate Contents of Multiple Files</h3><p>We can concatenate contents of more than one file into a new file through <code>cat</code>:<br><code>cat test1 test2 &gt; test_all</code>.</p>
+<h3 id="Display-Line-numbers"><a href="#Display-Line-numbers" class="headerlink" title="Display Line numbers"></a>Display Line numbers</h3><p>To display the contents of a file with the line number in front of each line, use option <code>-n</code>: <code>cat -n test</code>.</p>
+<p>And even the empty lines are numbered, in the case of numbering only nonempty lines, use option <code>-b</code> as follows: <code>cat -b test</code>.</p>
+<h3 id="Concatenate-File-Contents-along-with-Input-from-Stdin"><a href="#Concatenate-File-Contents-along-with-Input-from-Stdin" class="headerlink" title="Concatenate File Contents along with Input from Stdin"></a>Concatenate File Contents along with Input from Stdin</h3><p>There is a possibility to read lines from stdin along with concatenation of other files. Hence the user can type his own content whenever its required.</p>
+<p><code>cat - test1 test2 test_all</code> where we can insert a few lines (from stdin) in the beginning while combining files together. As seen above, <code>-</code> is the place where you can read from stdin, accordingly 1 line from stdin has been inserted into the beginning of a new file called <code>test_all</code> with the latter contents from <code>test1</code> and <code>test2</code> files.</p>
+<h3 id="Don’t-Display-Repeated-Empty-Output-Lines"><a href="#Don’t-Display-Repeated-Empty-Output-Lines" class="headerlink" title="Don’t Display Repeated Empty Output Lines"></a>Don’t Display Repeated Empty Output Lines</h3><p><code>cat</code> command provides an option called <code>-s</code> which will suppress consecutive empty output lines into one and displays: <code>cat -sn test</code>.</p>
+<h3 id="Display-End-of-Line-and-TAB-characters"><a href="#Display-End-of-Line-and-TAB-characters" class="headerlink" title="Display End of Line and TAB characters"></a>Display End of Line and TAB characters</h3><p>You can make the cat to display the <code>$</code> character at end of every line.</p>
+<p>Normally by listing file contents, users can identify whitespaces at the end of each lines, by using the cat <code>-e</code> option.</p>
+<p>Moreover, Use option <code>-T</code> to display the tab characters, and it displays <code>^I</code> for TAB character.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Unix/" rel="tag"># Unix</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/11/python-itertools-usage/" rel="next" title="The Usage of Itertools in Python">
+                <i class="fa fa-chevron-left"></i> The Usage of Itertools in Python
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/11/tensorflow-difference-between-name-scope-and-variable-scope/" rel="prev" title="Tensorflow, difference between name_scope and variable_scope">
+                Tensorflow, difference between name_scope and variable_scope <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="虫二" />
+          <p class="site-author-name" itemprop="name">虫二</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/iamtao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/iamtaol" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cut"><span class="nav-number">1.</span> <span class="nav-text">cut</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Select-Column-of-Characters"><span class="nav-number">1.1.</span> <span class="nav-text">Select Column of Characters</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Select-Specific-Column-of-Characters"><span class="nav-number">1.1.1.</span> <span class="nav-text">Select Specific Column of Characters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Select-Column-of-Characters-using-Range"><span class="nav-number">1.1.2.</span> <span class="nav-text">Select Column of Characters using Range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Select-Column-of-Characters-using-either-Start-or-End-Position"><span class="nav-number">1.1.3.</span> <span class="nav-text">Select Column of Characters using either Start or End Position</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Select-Field"><span class="nav-number">1.2.</span> <span class="nav-text">Select Field</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Select-a-Specific-Field-from-a-File"><span class="nav-number">1.2.1.</span> <span class="nav-text">Select a Specific Field from a File</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Select-Multiple-Fields-from-a-File"><span class="nav-number">1.2.2.</span> <span class="nav-text">Select Multiple Fields from a File</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Select-Fields-Only-When-a-Line-Contains-the-Delimiter"><span class="nav-number">1.2.3.</span> <span class="nav-text">Select Fields Only When a Line Contains the Delimiter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Select-All-Fields-Except-the-Specified-Fields"><span class="nav-number">1.2.4.</span> <span class="nav-text">Select All Fields Except the Specified Fields</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Change-Output-Delimiter-for-Display"><span class="nav-number">1.2.5.</span> <span class="nav-text">Change Output Delimiter for Display</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Change-Output-Delimiter-to-Newline"><span class="nav-number">1.2.6.</span> <span class="nav-text">Change Output Delimiter to Newline</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cat"><span class="nav-number">2.</span> <span class="nav-text">cat</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Display-the-contents-of-a-file"><span class="nav-number">2.0.1.</span> <span class="nav-text">Display the contents of a file</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-New-File"><span class="nav-number">2.0.2.</span> <span class="nav-text">Create a New File</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Copy-File-Content"><span class="nav-number">2.0.3.</span> <span class="nav-text">Copy File Content</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Concatenate-Contents-of-Multiple-Files"><span class="nav-number">2.0.4.</span> <span class="nav-text">Concatenate Contents of Multiple Files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Display-Line-numbers"><span class="nav-number">2.0.5.</span> <span class="nav-text">Display Line numbers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Concatenate-File-Contents-along-with-Input-from-Stdin"><span class="nav-number">2.0.6.</span> <span class="nav-text">Concatenate File Contents along with Input from Stdin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Don’t-Display-Repeated-Empty-Output-Lines"><span class="nav-number">2.0.7.</span> <span class="nav-text">Don’t Display Repeated Empty Output Lines</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Display-End-of-Line-and-TAB-characters"><span class="nav-number">2.0.8.</span> <span class="nav-text">Display End of Line and TAB characters</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">虫二</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

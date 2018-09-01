@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Interview,Deep Learning,Machine Learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Collect deep learning questions/answers from the web,e.g., 深度学习岗位面试问题整理笔记,深度学习相关的职位面试时一般会问什么？会问一些传统的机器学习算法吗？,如果你是面试官，你怎么去判断一个面试者的深度学习水平？.">
+<meta name="keywords" content="Interview,Deep Learning,Machine Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning Interview Questions">
+<meta property="og:url" content="IamTao.github.io/2017/09/11/interview-deep-learning/index.html">
+<meta property="og:site_name" content="庭草交翠">
+<meta property="og:description" content="Collect deep learning questions/answers from the web,e.g., 深度学习岗位面试问题整理笔记,深度学习相关的职位面试时一般会问什么？会问一些传统的机器学习算法吗？,如果你是面试官，你怎么去判断一个面试者的深度学习水平？.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-8555de443211e31f6e3967fe0fab83b3_b.png">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-27961b1ce1d39d970fae7e40fd99edf3_b.png">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-e37ce5df4fdfed2567506d03b7b0a6bf_b.png">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-ee269730f637849151525ab8ac299840_b.png">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-29d9d42212fd2294e71c2f3e760791d4_b.png">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-d081992735ff19112770f8aa8e273c13_b.png">
+<meta property="og:updated_time" content="2018-09-01T13:04:23.007Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deep Learning Interview Questions">
+<meta name="twitter:description" content="Collect deep learning questions/answers from the web,e.g., 深度学习岗位面试问题整理笔记,深度学习相关的职位面试时一般会问什么？会问一些传统的机器学习算法吗？,如果你是面试官，你怎么去判断一个面试者的深度学习水平？.">
+<meta name="twitter:image" content="https://pic4.zhimg.com/v2-8555de443211e31f6e3967fe0fab83b3_b.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="IamTao.github.io/2017/09/11/interview-deep-learning/"/>
+
+
+
+
+
+  <title>Deep Learning Interview Questions | 庭草交翠</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">庭草交翠</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="IamTao.github.io/2017/09/11/interview-deep-learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="虫二">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庭草交翠">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Deep Learning Interview Questions</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-11T06:52:25+02:00">
+                2017-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Science/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Science</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Collect deep learning questions/answers from the web,<br>e.g., <a href="https://zhuanlan.zhihu.com/p/25005808?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="noopener">深度学习岗位面试问题整理笔记</a>,<br><a href="https://www.zhihu.com/question/54308150" target="_blank" rel="noopener">深度学习相关的职位面试时一般会问什么？会问一些传统的机器学习算法吗？</a>,<br><a href="https://www.zhihu.com/question/41233373" target="_blank" rel="noopener">如果你是面试官，你怎么去判断一个面试者的深度学习水平？</a>.</p>
+<a id="more"></a>
+<h1 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h1><h2 id="Question-1"><a href="#Question-1" class="headerlink" title="Question 1"></a>Question 1</h2><p>CNN最成功的应用是在CV，那为什么NLP和Speech的很多问题也可以用CNN解出来？为什么AlphaGo里也用了CNN？这几个不相关的问题的相似性在哪里？CNN通过什么手段抓住了这个共性？</p>
+<ul>
+<li><a href="http://link.zhihu.com/?target=https%3A//www.researchgate.net/publication/277411157_Deep_Learning" target="_blank" rel="noopener">Deep Learning -Yann LeCun, Yoshua Bengio &amp; Geoffrey Hinton</a>.</li>
+<li><a href="http://link.zhihu.com/?target=https%3A//docs.google.com/presentation/d/1TVixw6ItiZ8igjp6U17tcgoFrLSaHWQmMOwjlgQY9co/pub%3Fslide%3Did.p" target="_blank" rel="noopener">Learn TensorFlow and deep learning, without a Ph.D.</a></li>
+<li><a href="http://link.zhihu.com/?target=http%3A//vdisk.weibo.com/s/AoN5oNl5t04h" target="_blank" rel="noopener">The Unreasonable Effectiveness of Deep Learning -LeCun 16 NIPS Keynote</a></li>
+<li>以上几个不相关问题的相关性在于，都存在<strong>局部与整体的关系</strong>，由低层次的特征经过组合，组成高层次的特征，并且得到不同特征之间的空间相关性。如下图：低层次的直线／曲线等特征，组合成为不同的形状，最后得到汽车的表示。<br><img src="https://pic4.zhimg.com/v2-8555de443211e31f6e3967fe0fab83b3_b.png" alt=""></li>
+<li>CNN抓住此共性的手段主要有四个：<strong>局部连接／权值共享／池化操作／多层次结构</strong>。<ul>
+<li>局部连接使网络可以提取数据的局部特征</li>
+<li>权值共享大大降低了网络的训练难度，一个Filter只提取一个特征，在整个图片（或者语音／文本） 中进行卷积；</li>
+<li>池化操作与多层次结构一起，实现了数据的降维，将低层次的局部特征组合成为较高层次的特征，从而对整个图片进行表示。如下图：<img src="https://pic4.zhimg.com/v2-27961b1ce1d39d970fae7e40fd99edf3_b.png" alt=""></li>
+</ul>
+</li>
+<li>上图中，<strong>如果每一个点的处理使用相同的Filter，则为全卷积，如果使用不同的Filter，则为Local-Conv</strong>。</li>
+</ul>
+<h2 id="Question-2"><a href="#Question-2" class="headerlink" title="Question 2"></a>Question 2</h2><p>为什么很多做人脸的Paper会最后加入一个Local Connected Conv？</p>
+<ul>
+<li><a href="http://link.zhihu.com/?target=https%3A//research.fb.com/wp-content/uploads/2016/11/deepface-closing-the-gap-to-human-level-performance-in-face-verification.pdf%3F" target="_blank" rel="noopener">DeepFace: Closing the Gap to Human-Level Performance in Face Verification</a></li>
+<li>以FaceBook DeepFace 为例：<img src="https://pic4.zhimg.com/v2-e37ce5df4fdfed2567506d03b7b0a6bf_b.png" alt=""></li>
+<li>DeepFace 先进行了两次全卷积＋一次池化，提取了低层次的边缘／纹理等特征。</li>
+<li>后接了3个Local-Conv层，这里是用Local-Conv的原因是，<strong>人脸在不同的区域存在不同的特征（眼睛／鼻子／嘴的分布位置相对固定），当不存在全局的局部特征分布时，Local-Conv更适合特征的提取</strong>。</li>
+</ul>
+<h2 id="Question-3"><a href="#Question-3" class="headerlink" title="Question 3"></a>Question 3</h2><p>什麽样的资料集不适合用深度学习?</p>
+<ul>
+<li><strong>数据集太小</strong>，数据样本不足时，深度学习相对其它机器学习算法，没有明显优势。</li>
+<li><strong>数据集没有局部相关特性</strong>, 目前深度学习表现比较好的领域主要是图像／语音／自然语言处理等领域，这些领域的一个共性是局部相关性。图像中像素组成物体，语音信号中音位组合成单词，文本数据中单词组合成句子，这些特征元素的组合一旦被打乱，表示的含义同时也被改变。对于没有这样的局部相关性的数据集，不适于使用深度学习算法进行处理。举个例子：预测一个人的健康状况，相关的参数会有年龄、职业、收入、家庭状况等各种元素，将这些元素打乱，并不会影响相关的结果。</li>
+</ul>
+<h2 id="Question-4"><a href="#Question-4" class="headerlink" title="Question 4"></a>Question 4</h2><p>对所有优化问题来说, 有没有可能找到比現在已知算法更好的算法?</p>
+<ul>
+<li><a href="http://link.zhihu.com/?target=https%3A//pan.baidu.com/share/link%3Fuk%3D1730478110%26shareid%3D233740338" target="_blank" rel="noopener">机器学习-周志华</a></li>
+<li>没有免费的午餐定理：<img src="https://pic1.zhimg.com/v2-ee269730f637849151525ab8ac299840_b.png" alt=""></li>
+<li>对于训练样本（黑点），不同的算法A/B在不同的测试样本（白点）中有不同的表现，这表示：对于一个学习算法A，若它在某些问题上比学习算法 B更好，则必然存在一些问题，在那里B比A好。</li>
+<li>也就是说：对于所有问题，无论学习算法A多聪明，学习算法 B多笨拙，它们的期望性能相同。</li>
+<li>但是：没有免费午餐定力假设所有问题出现几率相同，实际应用中，不同的场景，会有不同的问题分布，所以，在优化算法时，针对具体问题进行分析，是算法优化的核心所在。</li>
+</ul>
+<h2 id="Question-5"><a href="#Question-5" class="headerlink" title="Question 5"></a>Question 5</h2><p>用贝叶斯机率说明Dropout的原理</p>
+<ul>
+<li><a href="http://link.zhihu.com/?target=http%3A//mlg.eng.cam.ac.uk/yarin/PDFs/Dropout_as_a_Bayesian_approximation.pdf" target="_blank" rel="noopener">Dropout as a Bayesian Approximation: Insights and Applications</a></li>
+<li>To be extended</li>
+</ul>
+<h2 id="Question-6"><a href="#Question-6" class="headerlink" title="Question 6"></a>Question 6</h2><p>何为共线性, 跟过拟合有啥关联?</p>
+<ul>
+<li><a href="http://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Multicollinearity" target="_blank" rel="noopener">Multicollinearity-Wikipedia</a></li>
+<li>共线性：多变量线性回归中，变量之间由于存在高度相关关系而使回归估计不准确。</li>
+<li>共线性会造成冗余，导致过拟合</li>
+<li>解决方法：排除变量的相关性／加入权重正则。</li>
+</ul>
+<h2 id="Question-7"><a href="#Question-7" class="headerlink" title="Question 7"></a>Question 7</h2><p>说明如何用支持向量机实现深度学习(列出相关数学公式)</p>
+<h2 id="Question-8"><a href="#Question-8" class="headerlink" title="Question 8"></a>Question 8</h2><p>广义线性模型是怎被应用在深度学习中?</p>
+<ul>
+<li><a href="http://link.zhihu.com/?target=http%3A//blog.shakirm.com/2015/01/a-statistical-view-of-deep-learning-i-recursive-glms/" target="_blank" rel="noopener">A Statistical View of Deep Learning (I): Recursive GLMs</a></li>
+<li>深度学习从统计学角度，可以看做递归的广义线性模型。</li>
+<li>广义线性模型相对于经典的线性模型(y=wx+b)，核心在于引入了连接函数g(.)，形式变为：y=g−1(wx+b)。</li>
+<li>深度学习时递归的广义线性模型，神经元的激活函数，即为广义线性模型的链接函数。逻辑回归（广义线性模型的一种）的Logistic函数即为神经元激活函数中的Sigmoid函数，很多类似的方法在统计学和神经网络中的名称不一样，容易引起初学者的困惑。下图是一个对照表：<img src="https://pic1.zhimg.com/v2-29d9d42212fd2294e71c2f3e760791d4_b.png" alt=""></li>
+</ul>
+<h2 id="Question-9"><a href="#Question-9" class="headerlink" title="Question 9"></a>Question 9</h2><p>什麽造成梯度消失问题? 推导一下</p>
+<ul>
+<li><a href="http://link.zhihu.com/?target=https%3A//medium.com/%40karpathy/yes-you-should-understand-backprop-e2f06eab496b%23.urj9svxwg" target="_blank" rel="noopener">Yes you should understand backdrop－Andrej Karpathy</a></li>
+<li><a href="http://link.zhihu.com/?target=https%3A//www.quora.com/How-does-the-ReLu-solve-the-vanishing-gradient-problem" target="_blank" rel="noopener">How does the ReLu solve the vanishing gradient problem?</a></li>
+<li>神经网络的训练中，通过改变神经元的权重，使网络的输出值尽可能逼近标签以降低误差值，训练普遍使用BP算法，核心思想是，计算出输出与标签间的损失函数值，然后计算其相对于每个神经元的梯度，进行权值的迭代。</li>
+<li>梯度消失会造成权值更新缓慢，模型训练难度增加。造成梯度消失的一个原因是，许多激活函数将输出值挤压在很小的区间内，在激活函数两端较大范围的定义域内梯度为0。造成学习停止。<img src="https://pic4.zhimg.com/v2-d081992735ff19112770f8aa8e273c13_b.png" alt=""></li>
+</ul>
+<h2 id="Question-10"><a href="#Question-10" class="headerlink" title="Question 10"></a>Question 10</h2><p>什么是Weights Initialization. 不同的方式，造成的后果。为什么会造成这样的结果。</p>
+<ul>
+<li>几种主要的权值初始化方法： lecun_uniform / glorot_normal / he_normal / batch_normal</li>
+<li>lecun_uniform: <a href="http://link.zhihu.com/?target=https%3A//www.researchgate.net/profile/Yann_Lecun/publication/2811922_Efficient_BackProp/links/0deec519dfa1dc2f30000000.pdf" target="_blank" rel="noopener">Efficient BackProp</a></li>
+<li>glorot_normal: <a href="http://link.zhihu.com/?target=http%3A//jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf" target="_blank" rel="noopener">Understanding the difficulty of training deep feedforward neural networks</a></li>
+<li>he_normal: <a href="http://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1502.01852.pdf" target="_blank" rel="noopener">Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification</a></li>
+<li>batch_normal: <a href="http://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1502.03167.pdf" target="_blank" rel="noopener">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a></li>
+</ul>
+<h2 id="Question-11"><a href="#Question-11" class="headerlink" title="Question 11"></a>Question 11</h2><p>为什么网络够深(Neurons 足够多)的时候，总是可以避开较差Local Optima？</p>
+<ul>
+<li><a href="">The Loss Surfaces of Multilayer Networks</a></li>
+</ul>
+<h2 id="Question-12"><a href="#Question-12" class="headerlink" title="Question 12"></a>Question 12</h2><p>Loss. 有哪些定义方式（基于什么？）， 有哪些优化方式，怎么优化，各自的好处，以及解释。</p>
+<ul>
+<li>Cross-Entropy / MSE / KL散度</li>
+</ul>
+<h2 id="Question-13"><a href="#Question-13" class="headerlink" title="Question 13"></a>Question 13</h2><p>Dropout。 怎么做，有什么用处，解释。</p>
+<ul>
+<li><a href="http://link.zhihu.com/?target=https%3A//www.quora.com/How-does-the-dropout-method-work-in-deep-learning" target="_blank" rel="noopener">How does the dropout method work in deep learning?</a></li>
+<li><a href="http://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1207.0580.pdf" target="_blank" rel="noopener">Improving neural networks by preventing co-adaptation of feature detectors</a></li>
+<li><a href="http://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1312.6197.pdf" target="_blank" rel="noopener">An empirical analysis of dropout in piecewise linear networks</a></li>
+</ul>
+<h2 id="Question-14"><a href="#Question-14" class="headerlink" title="Question 14"></a>Question 14</h2><p>Activation Function. 选用什么，有什么好处，为什么会有这样的好处。</p>
+<ul>
+<li>几种主要的激活函数：Sigmond / ReLU ／PReLU</li>
+<li><a href="http://link.zhihu.com/?target=http%3A//jmlr.org/proceedings/papers/v15/glorot11a/glorot11a.pdf" target="_blank" rel="noopener">Deep Sparse Rectifier Neural Networks</a></li>
+<li><a href="http://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1502.01852.pdf" target="_blank" rel="noopener">Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification</a></li>
+</ul>
+<h2 id="Question-15"><a href="#Question-15" class="headerlink" title="Question 15"></a>Question 15</h2><p>推导一下Softmax Loss</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Interview/" rel="tag"># Interview</a>
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/04/tensorflow-dynamic-batching/" rel="next" title="Tensorflow, Dynamic Batching">
+                <i class="fa fa-chevron-left"></i> Tensorflow, Dynamic Batching
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/11/intuitional-explanation-for-cnn/" rel="prev" title="Intuitional Explanation for CNN">
+                Intuitional Explanation for CNN <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="虫二" />
+          <p class="site-author-name" itemprop="name">虫二</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/iamtao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/iamtaol" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Questions"><span class="nav-number">1.</span> <span class="nav-text">Questions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-1"><span class="nav-number">1.1.</span> <span class="nav-text">Question 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-2"><span class="nav-number">1.2.</span> <span class="nav-text">Question 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-3"><span class="nav-number">1.3.</span> <span class="nav-text">Question 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-4"><span class="nav-number">1.4.</span> <span class="nav-text">Question 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-5"><span class="nav-number">1.5.</span> <span class="nav-text">Question 5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-6"><span class="nav-number">1.6.</span> <span class="nav-text">Question 6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-7"><span class="nav-number">1.7.</span> <span class="nav-text">Question 7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-8"><span class="nav-number">1.8.</span> <span class="nav-text">Question 8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-9"><span class="nav-number">1.9.</span> <span class="nav-text">Question 9</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-10"><span class="nav-number">1.10.</span> <span class="nav-text">Question 10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-11"><span class="nav-number">1.11.</span> <span class="nav-text">Question 11</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-12"><span class="nav-number">1.12.</span> <span class="nav-text">Question 12</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-13"><span class="nav-number">1.13.</span> <span class="nav-text">Question 13</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-14"><span class="nav-number">1.14.</span> <span class="nav-text">Question 14</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-15"><span class="nav-number">1.15.</span> <span class="nav-text">Question 15</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">虫二</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep Learning,Tensorflow," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="From Tensorflow API">
+<meta name="keywords" content="Deep Learning,Tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Weight Initializer in Tensorflow">
+<meta property="og:url" content="IamTao.github.io/2017/06/13/tensorflow-initializer/index.html">
+<meta property="og:site_name" content="庭草交翠">
+<meta property="og:description" content="From Tensorflow API">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-09-01T13:04:23.022Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Weight Initializer in Tensorflow">
+<meta name="twitter:description" content="From Tensorflow API">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="IamTao.github.io/2017/06/13/tensorflow-initializer/"/>
+
+
+
+
+
+  <title>Weight Initializer in Tensorflow | 庭草交翠</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">庭草交翠</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="IamTao.github.io/2017/06/13/tensorflow-initializer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="虫二">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庭草交翠">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Weight Initializer in Tensorflow</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-13T16:05:55+02:00">
+                2017-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Science/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Science</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>From Tensorflow API</p>
+<a id="more"></a>
+<h1 id="tf-random-normal-initializer"><a href="#tf-random-normal-initializer" class="headerlink" title="tf.random_normal_initializer"></a>tf.random_normal_initializer</h1><p>Initializer that generates tensors with a normal distribution.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__init__(</span><br><span class="line">    mean=0.0,</span><br><span class="line">    stddev=1.0,</span><br><span class="line">    seed=None,</span><br><span class="line">    dtype=tf.float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1 id="tf-truncated-normal-initializer"><a href="#tf-truncated-normal-initializer" class="headerlink" title="tf.truncated_normal_initializer"></a>tf.truncated_normal_initializer</h1><p>Initializer that generates a truncated normal distribution.</p>
+<p>These values are similar to values from a random_normal_initializer except that values more than two standard deviations from the mean are discarded and re-drawn.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__init__(</span><br><span class="line">    mean=0.0,</span><br><span class="line">    stddev=1.0,</span><br><span class="line">    seed=None,</span><br><span class="line">    dtype=tf.float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>The benefit of using the truncated normal distribution is to prevent generating ‘’dead neurons’’ due to the relu_logits being used, which is explained <a href="https://www.tensorflow.org/get_started/mnist/pros" target="_blank" rel="noopener">here</a></p>
+<blockquote>
+<p>One should generally initialize weights with a small amount of noise for symmetry breaking, and to prevent 0 gradients. Since we’re using ReLU neurons, it is also good practice to initialize them with a slightly positive initial bias to avoid ‘’dead neurons’’.</p>
+</blockquote>
+<h1 id="tf-random-uniform-initializer"><a href="#tf-random-uniform-initializer" class="headerlink" title="tf.random_uniform_initializer"></a>tf.random_uniform_initializer</h1><p>Initializer that generates tensors with a uniform distribution.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__init__(</span><br><span class="line">    minval=0,</span><br><span class="line">    maxval=None, # defaults to 1 for float types.</span><br><span class="line">    seed=None,</span><br><span class="line">    dtype=tf.float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1 id="tf-uniform-unit-scaling-initializer"><a href="#tf-uniform-unit-scaling-initializer" class="headerlink" title="tf.uniform_unit_scaling_initializer"></a>tf.uniform_unit_scaling_initializer</h1><p>Initializer that generates tensors without scaling variance.</p>
+<p>When initializing a deep network, it is in principle advantageous to keep the scale of the input variance constant, so it does not explode or diminish by reaching the final layer.<br>If the input is <code>x</code> and the operation <code>x * W</code>, and we want to initialize <code>W</code> uniformly at random, we need to pick <code>W</code> from</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[-sqrt(3) / sqrt(dim), sqrt(3) / sqrt(dim)]</span><br></pre></td></tr></table></figure>
+<p>to keep the scale intact, where <code>dim = W.shape[0]</code> (the size of the input).</p>
+<p>A similar calculation for convolutional networks gives an analogous result with dim equal to the product of the first 3 dimensions. When nonlinearities are present, we need to multiply this by a constant factor.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__init__(</span><br><span class="line">    factor=1.0,</span><br><span class="line">    seed=None,</span><br><span class="line">    dtype=tf.float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1 id="tf-contrib-layers-xavier-initializer"><a href="#tf-contrib-layers-xavier-initializer" class="headerlink" title="tf.contrib.layers.xavier_initializer"></a>tf.contrib.layers.xavier_initializer</h1><p>Returns an initializer performing “Xavier” initialization for weights.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xavier_initializer(</span><br><span class="line">    uniform=True,</span><br><span class="line">    seed=None,</span><br><span class="line">    dtype=tf.float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>This initializer is designed to keep the scale of the gradients roughly the same in all layers:</p>
+<ul>
+<li>In uniform distribution<ul>
+<li>this ends up being the range: <code>x = sqrt(6. / (in + out)); [-x, x]</code></li>
+</ul>
+</li>
+<li>For normal distribution<ul>
+<li>a standard deviation of <code>sqrt(3. / (in + out))</code> is used.</li>
+</ul>
+</li>
+</ul>
+<p>An simple example from Stackoverflow:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">def xavier_init(n_inputs, n_outputs, uniform=True):</span><br><span class="line">    &quot;&quot;&quot;Set the parameter initialization using the method described.</span><br><span class="line">    This method is designed to keep the scale of the gradients roughly the same</span><br><span class="line">    in all layers.</span><br><span class="line">    Xavier Glorot and Yoshua Bengio (2010):</span><br><span class="line">             Understanding the difficulty of training deep feedforward neural</span><br><span class="line">             networks. International conference on artificial intelligence and</span><br><span class="line">             statistics.</span><br><span class="line">    Args:</span><br><span class="line">      n_inputs: The number of input nodes into each output.</span><br><span class="line">      n_outputs: The number of output nodes for each input.</span><br><span class="line">      uniform: If true use a uniform distribution, otherwise use a normal.</span><br><span class="line">    Returns:</span><br><span class="line">      An initializer.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    if uniform:</span><br><span class="line">        # 6 was used in the paper.</span><br><span class="line">        init_range = math.sqrt(6.0 / (n_inputs + n_outputs))</span><br><span class="line">        return tf.random_uniform_initializer(-init_range, init_range)</span><br><span class="line">    else:</span><br><span class="line">        # 3 gives us approximately the same limits as above since this repicks</span><br><span class="line">        # values greater than 2 standard deviations from the mean.</span><br><span class="line">        stddev = math.sqrt(3.0 / (n_inputs + n_outputs))</span><br><span class="line">        return tf.truncated_normal_initializer(stddev=stddev)</span><br></pre></td></tr></table></figure>
+<h1 id="tf-contrib-layers-variance-scaling-initializer"><a href="#tf-contrib-layers-variance-scaling-initializer" class="headerlink" title="tf.contrib.layers.variance_scaling_initializer"></a>tf.contrib.layers.variance_scaling_initializer</h1><p>Returns an initializer that generates tensors without scaling variance.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">variance_scaling_initializer(</span><br><span class="line">    factor=2.0,</span><br><span class="line">    mode=&apos;FAN_IN&apos;,</span><br><span class="line">    uniform=False,  # Whether to use uniform or normal distributed random initialization.</span><br><span class="line">    seed=None,</span><br><span class="line">    dtype=tf.float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>When initializing a deep network, it is in principle advantageous to keep the scale of the input variance constant, so it does not explode or diminish by reaching the final layer. This initializer use the following formula:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">if mode=&apos;FAN_IN&apos;: # Count only number of input connections.</span><br><span class="line">    n = fan_in</span><br><span class="line">elif mode=&apos;FAN_OUT&apos;: # Count only number of output connections.</span><br><span class="line">    n = fan_out</span><br><span class="line">elif mode=&apos;FAN_AVG&apos;: # Average number of inputs and output connections.</span><br><span class="line">    n = (fan_in + fan_out) / 2.0</span><br><span class="line"></span><br><span class="line">if uniform:</span><br><span class="line">    limit = math.sqrt(3.0 * factor / n)</span><br><span class="line">    return tf.random_uniform(shape, -limit, limit)</span><br><span class="line">else:</span><br><span class="line">    return tf.truncated_normal(shape, 0.0, stddev=sqrt(factor / n))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>To get <a href="http://arxiv.org/pdf/1502.01852v1.pdf" target="_blank" rel="noopener">Delving Deep into Rectifiers</a>, use (Default):<ul>
+<li><code>factor=2.0 mode=&#39;FAN_IN&#39; uniform=False</code>.</li>
+</ul>
+</li>
+<li>To get <a href="http://arxiv.org/abs/1408.5093" target="_blank" rel="noopener">Convolutional Architecture for Fast Feature Embedding</a>:<ul>
+<li><code>factor=1.0 mode=&#39;FAN_IN&#39; uniform=True</code></li>
+</ul>
+</li>
+<li>To get <a href="http://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf" target="_blank" rel="noopener">Understanding the difficulty of training deep feedforward neural networks</a>:<ul>
+<li><code>factor=1.0 mode=&#39;FAN_AVG&#39; uniform=True</code></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+            <a href="/tags/Tensorflow/" rel="tag"># Tensorflow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/13/distributional-representation-and-distributed-representation/" rel="next" title="distributional representation and distributed representation">
+                <i class="fa fa-chevron-left"></i> distributional representation and distributed representation
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/14/tensorflow-dilated-conv-example/" rel="prev" title="dilated conv example in Tensorflow">
+                dilated conv example in Tensorflow <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="虫二" />
+          <p class="site-author-name" itemprop="name">虫二</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://github.com/iamtao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/iamtaol" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tf-random-normal-initializer"><span class="nav-number">1.</span> <span class="nav-text">tf.random_normal_initializer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tf-truncated-normal-initializer"><span class="nav-number">2.</span> <span class="nav-text">tf.truncated_normal_initializer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tf-random-uniform-initializer"><span class="nav-number">3.</span> <span class="nav-text">tf.random_uniform_initializer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tf-uniform-unit-scaling-initializer"><span class="nav-number">4.</span> <span class="nav-text">tf.uniform_unit_scaling_initializer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tf-contrib-layers-xavier-initializer"><span class="nav-number">5.</span> <span class="nav-text">tf.contrib.layers.xavier_initializer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tf-contrib-layers-variance-scaling-initializer"><span class="nav-number">6.</span> <span class="nav-text">tf.contrib.layers.variance_scaling_initializer</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">虫二</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
